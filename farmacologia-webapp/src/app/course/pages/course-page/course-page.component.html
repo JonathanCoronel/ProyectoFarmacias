@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ejemplos Flex</title>
+  <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+</head>
+<body>
+<section class="container">
+  <div class="title">
+      <h1>
+        <span>
+          <a type="button" href="/">
+            <i class="fas fa-chevron-left leaft" (click)="prevPag()"></i>
+          </a>
+          {{titleCourse}} 
+        </span>
+      </h1>
+    <ng-container *ngIf="user && claims?.isAdmin">
+      <button type="button" class="btn" data-toggle="modal" data-target="#newCourse" data-whatever="@mdo"
+              style="font-size: 80%; font-weight: 400; color: #707070;"
+              [routerLink]="['add-topic']">Agregar nuevo tema
+      </button>
+    </ng-container>
+  </div>
+  <div class="fondoGeneral">
+    <div class="azul-fondo">
+      <div  (click)="prevCourse()" class="flechas1">
+        <i class="fa-solid fa-chevron-up" ></i>
+      </div>
+      <div (click)="nextCourse()" class="flechas2">
+        <i class="fa-solid fa-chevron-down"></i>
+      </div>
+      <div class="conteo">
+        <div>
+        {{currentCourseIndex + 1 }} /
+        {{topics.length}}
+        </div>
+      </div>
+    </div>
+    <div class="card" *ngIf="currentCourse">
+      {{currentCourseIndex + 1 }} / {{topics.length}}
+      <div class="card-body">
+        <div class="content">
+          <h4 class="card-title">{{ currentCourse.title }}</h4>
+          <p class="card-text">{{ currentCourse.content }}</p>
+        </div>
+        <div class="imagen">
+          <img [src]="currentCourse.image[0].url" [alt]="currentCourse.title" [title]="currentCourse.title"
+               class="card-img-top">
+        </div>
+      </div>
+      <div class="card-footer"  (click)="sendToTopicView(currentCourse.id)">
+        <a type="button">
+          Comenzar <i class="fas fa-chevron-right leaft"></i>
+        </a>
+        <ng-container *ngIf="claims.isAdmin">
+          <a type="button" class="ms-2 text-danger" (click)="deleteTopic(currentCourse.id)">
+            Eliminar <i class="fas fa-trash-alt"></i>
+          </a>
+        </ng-container>
+      </div>
+    </div>
+
+  </div>
+
+</section>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,106 @@
+<app-navbar></app-navbar>
+
+<div class="p-5">
+  <div class="container px-5">
+    <h6 class="mb-3">AGREGAR NUEVO SUBTEMA</h6>
+    <form [formGroup]="createSubTopic" [ngClass]="{ 'was-validated': formIsValid }" (ngSubmit)="addSubtopic()">
+      <div class="mb-3 row">
+        <label class="col-sm-2 col-form-label">Título</label>
+        <div class="col-sm-10">
+          <input
+            type="text"
+            class="form-control"
+            aria-describedby="emailHelp"
+            formControlName="title"
+            [class.valid]="createSubTopic.get('title')?.valid && (createSubTopic.get('title')?.dirty || createSubTopic.get('title')?.touched)"
+            [class.invalid]="createSubTopic.get('title')?.invalid && (createSubTopic.get('title')?.dirty || createSubTopic.get('title')?.touched)"
+          />
+
+          <!--required-->
+
+          <div *ngIf="(createSubTopic.get('title').invalid &&
+        createSubTopic.get('title').errors &&
+        (createSubTopic.get('title').dirty || createSubTopic.get('title').touched)) || isValidated">
+            <small class="text-danger"
+                   *ngIf="createSubTopic.get('title').hasError('required')">
+              * Este campo es obligatorio
+            </small>
+          </div>
+
+        </div>
+      </div>
+
+      <!--description-->
+
+      <div class="mb-3 row">
+        <label class="col-sm-2 col-form-label">Descripción</label>
+        <div class="col-sm-10">
+          <textarea
+            type="text"
+            class="form-control description"
+            aria-describedby="emailHelp"
+            formControlName="description"
+            rows="3"
+            [class.valid]="createSubTopic.get('description')?.valid && (createSubTopic.get('description')?.dirty || createSubTopic.get('description')?.touched)"
+            [class.invalid]="createSubTopic.get('description')?.invalid && (createSubTopic.get('description')?.dirty || createSubTopic.get('description')?.touched)"
+          >
+          </textarea>
+
+          <!--required-->
+
+          <div *ngIf="(createSubTopic.get('description').invalid &&
+        createSubTopic.get('description').errors &&
+        (createSubTopic.get('description').dirty || createSubTopic.get('description').touched)) || isValidated">
+            <small class="text-danger"
+                   *ngIf="createSubTopic.get('description').hasError('required')">
+              * Este campo es obligatorio
+            </small>
+          </div>
+
+        </div>
+      </div>
+
+      <!--image-->
+
+          <div class="form-group mb-3 row">
+            <label class="col-sm-2 col-form-label">Imagen</label>
+            <div class="col-sm-10">
+              <input
+                class="form-control"
+                type="file"
+                id="formFile"
+                accept=".jpeg,.png,.jpg"
+                (change)="captureFile($event)"
+              />
+
+              <!--required-->
+
+              <small class="text-danger"
+                     *ngIf="!isValid && isValidated">
+                * Seleccione un archivo
+              </small>
+
+            </div>
+          </div>
+
+      <!--save-->
+
+      <button type="submit" class="btn btn-dark mt-4">
+
+        <div *ngIf="isSaving" class="spinner-grow spinner-grow-sm text-light" role="status">
+          <span class="sr-only">Loading...</span>
+        </div>
+        <div *ngIf="isSaving" class="spinner-grow spinner-grow-sm text-light" role="status">
+          <span class="sr-only">Loading...</span>
+        </div>
+        <div *ngIf="isSaving" class="spinner-grow spinner-grow-sm text-light" role="status">
+          <span class="sr-only">Loading...</span>
+        </div>
+        <span *ngIf="!isSaving">AGREGAR</span>
+
+      </button>
+
+    </form>
+
+  </div>
+</div>

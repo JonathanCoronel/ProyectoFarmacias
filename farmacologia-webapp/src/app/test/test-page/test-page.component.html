@@ -1,0 +1,59 @@
+<app-navbar [changeStatus]="flag"></app-navbar>
+  <section class="container col-10 mt-5 main-container">
+    <div
+      class="
+        row
+        flex-column-reverse flex-lg-row
+        equalize
+        justify-content-between
+        mx-1 mx-sm-0
+      "
+    >
+      <div class="col-sm-9 mt-4 mt-sm-0">
+        <h2 class="text-uppercase text-dark">CASO CLINICO</h2>
+        <small class="mb-15">{{ quiz.description }}</small>
+      </div>
+      <div class="col-sm-2">
+        <img
+          class="align-self-center img-fluid"
+          src="https://static.vecteezy.com/system/resources/previews/001/241/214/non_2x/fale-doctor-with-stethoscope-vector.jpg"
+          alt="Generic placeholder image"
+        />
+      </div>
+    </div>
+  </section>
+  <ng-container *ngFor="let test of questions">
+    <div class="container col-10 mt-1 pl-5">
+    <h6 class="mb-1">{{ test.question }}</h6>
+    </div>
+    <section class="container col-10 mt-2 pl-12">
+      <div
+        class="
+          row
+          flex-column-reverse flex-lg-row
+          equalize
+          justify-content-between
+          mx-1 mx-sm-0
+        "
+      >
+        
+        <div class="col-lg-10 mt-5 mt-lg-0 content-container-2">
+          <ul class="list-group" *ngFor="let questions of test.alternatives">
+            <li
+              class="list-group-item justify-content-end mb-3 border p-3"
+              appBackground
+              [correctAnswer]="questions.iscorrect"
+              (change)="onAnswer(questions.iscorrect)"
+              [disabled]="true"
+            >
+              {{ questions.content }}
+            </li>
+          </ul>
+        </div>
+    
+      </div>
+    </section>
+</ng-container>
+
+
+

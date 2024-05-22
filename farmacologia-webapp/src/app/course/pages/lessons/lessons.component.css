@@ -1,0 +1,10 @@
+
+.tab {
+    color: var(--grey);
+    padding-bottom: 0.5px;
+  }
+  .selected-tab {
+    border-bottom: 2px solid #264653;
+    padding-bottom: 0.5px;
+    color: #264653;
+  }

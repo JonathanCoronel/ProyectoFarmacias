@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "utpl-pharmacology": {
+      "hosting": {
+        "farmacologia-webapp": [
+          "utpl-pharmacology"
+        ]
+      }
+    }
+  }
+}

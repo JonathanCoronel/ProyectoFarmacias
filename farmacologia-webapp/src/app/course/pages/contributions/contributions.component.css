@@ -1,0 +1,11 @@
+.icons{
+    background-color: transparent;
+    border: none;
+    border-bottom-color: none;
+    font-size: 90%;
+    font-weight: 600;
+    color: #17a2b8
+}
+.fa, .fas {
+    color:#F12849;
+}

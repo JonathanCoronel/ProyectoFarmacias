@@ -1,0 +1,160 @@
+<app-navbar></app-navbar>
+
+<div class="container">
+  <div class="row">
+    <div class="col"></div>
+    <div class="col-auto align-self-center mt-3">
+
+      <app-signed-user [user]="user"></app-signed-user>
+
+    </div>
+  </div>
+</div>
+
+  <div class="container px-5">
+    <h6 class="mb-3">AGREGAR NUEVO TEMA</h6>
+    <form [formGroup]="createTopic" [ngClass]="{ 'was-validated': formIsValid }" (ngSubmit)="addTopic()">
+
+      <!--title-->
+
+      <div class="form-group mb-3 row">
+        <label for="title" class="col-sm-2 col-form-label">Título</label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" id="title" formControlName="title"
+                 [class.valid]="createTopic.get('title')?.valid && (createTopic.get('title')?.dirty || createTopic.get('title')?.touched)"
+                 [class.invalid]="createTopic.get('title')?.invalid && (createTopic.get('title')?.dirty || createTopic.get('title')?.touched)">
+
+          <div *ngIf="(createTopic.get('title').invalid &&
+        createTopic.get('title').errors &&
+        (createTopic.get('title').dirty || createTopic.get('title').touched)) || isValidated">
+            <small class="text-danger"
+                   *ngIf="createTopic.get('title').hasError('required')">
+              * Este campo es obligatorio
+            </small>
+          </div>
+        </div>
+      </div>
+
+      <!--content-->
+
+      <div class="form-group mb-3 row">
+        <label for="content" class="col-sm-2 ol-form-label">Descripción</label>
+        <div class="col-sm-10">
+          <textarea class="form-control" id="content" formControlName="content" rows="3"
+
+                 [class.valid]="createTopic.get('content')?.valid && (createTopic.get('content')?.dirty || createTopic.get('content')?.touched)"
+                 [class.invalid]="createTopic.get('content')?.invalid && (createTopic.get('content')?.dirty || createTopic.get('content')?.touched)">
+            </textarea>
+          <div *ngIf="(createTopic.get('content').invalid &&
+        createTopic.get('content').errors &&
+        (createTopic.get('content').dirty || createTopic.get('content').touched)) || isValidated">
+            <small class="text-danger"
+                   *ngIf="createTopic.get('content').hasError('required')">
+              * Este campo es obligatorio
+            </small>
+          </div>
+        </div>
+      </div>
+
+      <!--requirements-->
+
+      <div class="form-group mb-3 row">
+        <label class="col-sm-2 col-form-label">Requerimientos</label>
+        <div class="col-sm-10">
+          <mat-form-field class="chip-list">
+            <mat-chip-list #requirementsList aria-label="Add requirements">
+              <mat-chip *ngFor="let requirement of requirements" [selectable]="selectableRequirements"
+                        [removable]="removableRequirements" (removed)="removeRequirement(requirement)">
+                {{requirement}}
+                <mat-icon matChipRemove *ngIf="removableRequirements">cancel</mat-icon>
+              </mat-chip>
+              <input placeholder="Agregar un nuevo requerimiento"
+                     [matChipInputFor]="requirementsList"
+                     [matChipInputSeparatorKeyCodes]="separatorKeysCodesRequirements"
+                     [matChipInputAddOnBlur]="addOnBlurRequirements"
+                     (matChipInputTokenEnd)="addRequirement($event)">
+            </mat-chip-list>
+          </mat-form-field>
+
+          <!--required-->
+
+          <div *ngIf="(createTopic.get('requirements').invalid &&
+                createTopic.get('requirements').errors &&
+                (createTopic.get('requirements').dirty || createTopic.get('requirements').touched)) || isValidated">
+            <small class="text-danger"
+                   *ngIf="createTopic.get('requirements').hasError('required')">
+              * Este campo es obligatorio
+            </small>
+          </div>
+
+        </div>
+      </div>
+
+      <!--learning-->
+
+      <div class="form-group mb-3 row">
+        <label class="col-sm-2 col-form-label">Lo que aprenderás</label>
+        <div class="col-sm-10">
+          <mat-form-field class="chip-list">
+            <mat-chip-list #learningList aria-label="Add learning">
+              <mat-chip *ngFor="let learn of learning" [selectable]="selectableLearning"
+                        [removable]="removableLearning" (removed)="removeLearning(learn)">
+                {{learn}}
+                <mat-icon matChipRemove *ngIf="removableLearning">cancel</mat-icon>
+              </mat-chip>
+              <input placeholder="Agregar un nuevo aprendizaje"
+                     [matChipInputFor]="learningList"
+                     [matChipInputSeparatorKeyCodes]="separatorKeysCodesLearning"
+                     [matChipInputAddOnBlur]="addOnBlurLearning"
+                     (matChipInputTokenEnd)="addLearning($event)">
+            </mat-chip-list>
+          </mat-form-field>
+
+          <!--required-->
+
+          <div *ngIf="(createTopic.get('learning').invalid &&
+                createTopic.get('learning').errors &&
+                (createTopic.get('learning').dirty || createTopic.get('learning').touched)) || isValidated">
+            <small class="text-danger"
+                   *ngIf="createTopic.get('learning').hasError('required')">
+              * Este campo es obligatorio
+            </small>
+          </div>
+
+        </div>
+      </div>
+
+
+      <!--file-->
+
+      <div class="form-group mb-3 row">
+        <label for="formFile" class="col-sm-2 col-form-label">Imagen</label>
+        <div class="col-sm-10">
+          <input class="form-control" type="file" id="formFile" accept=".jpeg,.png,.jpg"
+                 (change)="captureFile($event)">
+
+          <!--required-->
+
+          <small class="text-danger"
+                 *ngIf="!isValid && isValidated">
+            * Seleccione un archivo
+          </small>
+        </div>
+
+      </div>
+      <button type="submit" class="btn btn-dark mt-4">
+
+        <div *ngIf="isSaving" class="spinner-grow spinner-grow-sm text-light" role="status">
+          <span class="sr-only">Loading...</span>
+        </div>
+        <div *ngIf="isSaving" class="spinner-grow spinner-grow-sm text-light" role="status">
+          <span class="sr-only">Loading...</span>
+        </div>
+        <div *ngIf="isSaving" class="spinner-grow spinner-grow-sm text-light" role="status">
+          <span class="sr-only">Loading...</span>
+        </div>
+        <span *ngIf="!isSaving">AGREGAR</span>
+
+      </button>
+    </form>
+  </div>

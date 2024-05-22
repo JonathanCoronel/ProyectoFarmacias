@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ejemplos Flex</title>
+  <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+</head>
+<body>
+<div class="container">
+  <div class="row">
+    <div class="col"></div>
+    <div class="col-auto align-self-center mt-3">
+      <div *ngIf="user && claims?.isAdmin">
+        <button type="button" class="btn" style="font-size: 80%; font-weight: 400; color: #707070;"
+                [routerLink]="['add-subtopic']">
+          Agregar nuevo subtema
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+<section class="containerTitle">
+      <h3>
+        <span>
+          <a type="button" [routerLink]="['/course', courseId]">
+                <i class="fas fa-chevron-left"></i>
+          </a>
+        </span>
+        {{ topic?.title }}
+      </h3>
+</section>
+<div class="contenedorGeneral">
+  <div class="menu">
+    <div class="scroll">
+    <div  class="containerMenu" *ngFor="let subtopic of subtopics; let i = index">
+      <p class="negrita">Subtema {{ i + 1 }}: {{ subtopic.title }}</p>
+      <div class="opciones" *ngFor="let opcion of opciones">
+        <i class="fa-solid fa-check-double"></i> {{ opcion }}
+      </div>
+      <button (click)="showSubtopicInfo(subtopic,i)">Ver detalles</button>
+      <button (click)="deleteSubtopic(subtopic.id)" *ngIf="claims?.isAdmin">
+        <i class="fas fa-trash-alt text-danger"></i>
+      </button>
+    </div>
+    </div>
+  </div>
+
+  <div class="info"  >
+    <h5>Curso seleccionado</h5>
+    <div class="subtemaInfo" *ngIf="selectedSubtopic">
+    <p>Subtema {{ subtopicIndex + 1 }} de {{ subtopics.length }}</p>
+      <p class="negrita">SUBTEMA {{ subtopicIndex + 1 }} : {{ selectedSubtopic.title }}</p>
+    <button [routerLink]="['subtopic', selectedSubtopic.id]">Comenzar</button>
+      <p>!Completa el primer subtema! Continua Aprendiendo</p>
+    </div>
+
+    <h5>Lo que aprenderás</h5>
+    <div class="subtemaInfo2">
+        <div class="aprendizaje" *ngFor="let learn of topic?.learning">
+          <i class="fa-solid fa-check-double"></i> {{ learn }}
+        </div>
+    </div>
+  </div>
+</div>
+</div>
+</body>
+</html>
+    <!--
+    <div >
+      <ul>
+        <ng-container *ngFor="let requirement of topic?.requirements">
+          <li>{{ requirement }}</li>
+        </ng-container>
+      </ul>
+    </div>
+    <div >
+      Lo que aprenderás
+      <ul>
+        <ng-container *ngFor="let learn of topic?.learning">
+          <li>{{ learn }}</li>
+        </ng-container>
+      </ul>
+    </div>
+    -->
+
+  <!--
+  <div class="menu">
+      <ng-container *ngFor="let subtopic of subtopics ">
+        <div class="card">
+              <div class="card-body">
+                <div class="row">
+                  <div [ngClass]="{'col-10' :claims?.isAdmin, 'col-12': !claims?.isAdmin}">
+                    <a class="text-decoration-none" style="color: #264653" type="button" [routerLink]="['subtopic', subtopic.id]">
+                      <h5 class="card-title"> {{ subtopic.title }}</h5>
+                    </a>
+                  </div>
+                  <div class="col-1" *ngIf="claims?.isAdmin">
+                    <a type="button" (click)="deleteSubtopic(subtopic.id)">
+                      <i class="fas fa-trash-alt text-danger"></i>
+                    </a>
+                  </div>
+                </div>
+
+
+                <div class="d-md-block d-none">
+                  <p class="card-text ">{{ subtopic.description}}</p>
+                </div>
+
+              </div>
+        </div>
+      </ng-container>
+  </div>
+-->
+
+
+
+<!-- Delete Modal -->
+
+<!--<div-->
+<!--  class="modal fade"-->
+<!--  bsModal-->
+<!--  #deleteSubtopicModal="bs-modal"-->
+<!--  [config]="{ backdrop: 'static' }"-->
+<!--  tabindex="-1"-->
+<!--  role="dialog"-->
+<!--  aria-labelledby="dialog-static-name"-->
+<!--&gt;-->
+<!--  <div class="modal-dialog">-->
+<!--    <div class="modal-content">-->
+<!--      <div class="modal-header pb-0">-->
+<!--        <div class="text-center">-->
+<!--          <b><label class="text-danger "-->
+<!--          >-->
+<!--            ELIMINAR-->
+
+<!--          </label>-->
+<!--            <br/>-->
+<!--          </b>-->
+<!--        </div>-->
+
+<!--        <button-->
+<!--          type="button"-->
+<!--          class="close pull-right"-->
+<!--          aria-label="Close"-->
+<!--          (click)="deleteSubtopicModal.hide()"-->
+<!--        >-->
+<!--          <span aria-hidden="true">&times;</span>-->
+<!--        </button>-->
+<!--      </div>-->
+<!--      <div class="modal-body text-center">-->
+
+<!--        <b><label-->
+<!--          class="text-dark"-->
+<!--        >-->
+<!--          ¡IMPORTANTE!-->
+<!--        </label></b>-->
+<!--        <label>Recuerde que al eliminar un subtema usted eliminara todo el contenido que viene anexado a este.</label>-->
+<!--        <div class="d-flex justify-content-center pt-4">-->
+<!--          <button-->
+<!--            type="button"-->
+<!--            class="btn btn-secondary "-->
+<!--            (click)="deleteSubtopicModal.hide()"-->
+<!--          >-->
+<!--            Cancel-->
+<!--          </button>-->
+<!--          <button-->
+<!--            type="button"-->
+<!--            class="btn btn-danger ml-2"-->
+<!--            (click)="removeSubtopic()"-->
+<!--          >-->
+
+<!--            Eliminar-->
+<!--          </button>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--</div>-->
+
+
+
+
+
+
+
+
+
+

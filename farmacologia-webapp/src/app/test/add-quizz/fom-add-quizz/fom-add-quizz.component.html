@@ -1,0 +1,117 @@
+<app-navbar></app-navbar>
+<div class="p-5">
+  <div class="container px-5">
+    <h6 class="mb-3">AGREGAR CASO CLNICO</h6>
+    <form [formGroup]="createQuizz">
+      <div class="mb-3 row">
+        <label class="col-sm-2 col-form-label">Descripcion:</label>
+        <div class="col-sm-10">
+          <textarea
+            type="email"
+            class="form-control description"
+            id="exampleInputEmail1"
+            aria-describedby="emailHelp"
+            formControlName="descriptionQuizz"
+          >
+          </textarea>
+        </div>
+      </div>
+      <ng-container *ngIf="flag">
+      <button  type="submit" (click)="createTest()" class="btn btn-dark mt-4">
+        AGREGAR PREGUNTA
+      </button>
+    </ng-container>
+      <div *ngIf="flag else question" class="mt-2"></div>
+    </form>
+  </div>
+</div>
+<ng-template #question>
+    <form [formGroup]="createQuizz">
+    <div class="mb-3 row">
+        <label class="col-sm-2 col-form-label">Pregunta:</label>
+        <div class="col-sm-10">
+          <input
+            type="email"
+            class="form-control"
+            id="exampleInputEmail1"
+            aria-describedby="emailHelp"
+            formControlName="question"
+          />
+        </div>
+      </div>
+      <ng-container *ngIf="flagQuestions">
+      <button type="submit" (click)="getQuizz()" class="btn btn-dark mt-4">
+        AGREGAR RESPUESTA
+      </button>
+    </ng-container>
+      <div *ngIf="flagQuestions else questions">
+
+      </div>
+    </form>
+</ng-template>
+<ng-template #questions>
+  <form [formGroup]="createQuizz">
+    <div class="mb-3 row">
+        <label class="col-sm-2 col-form-label text-danger pr-0"
+          >Respuesta Incorrecta:</label
+        >
+        <div class="col-sm-10">
+          <input
+            type="email"
+            class="form-control"
+            id="exampleInputEmail1"
+            aria-describedby="emailHelp"
+            formControlName="incorrect1"
+          />
+        </div>
+      </div>
+      <div class="mb-3 row">
+        <label class="col-sm-2 col-form-label text-danger pr-0"
+          >Respuesta Incorrecta:</label
+        >
+        <div class="col-sm-10">
+          <input
+            type="email"
+            class="form-control"
+            id="exampleInputEmail1"
+            aria-describedby="emailHelp"
+            formControlName="incorrect2"
+          />
+        </div>
+      </div>
+      <div class="mb-3 row">
+        <label class="col-sm-2 col-form-label text-success"
+          >Respuesta Correcta:</label
+        >
+        <div class="col-sm-10">
+          <input
+            type="email"
+            class="form-control"
+            id="exampleInputEmail1"
+            aria-describedby="emailHelp"
+            formControlName="correct"
+          />
+        </div>
+      </div>
+      <button type="submit" (click)="createQuestion(); addQuizzModal.show()" class="btn btn-dark mt-4">
+        AGREGAR CASO CLINICO
+      </button>
+    </form>
+</ng-template>
+<div
+  class="modal fade"
+  bsModal
+  #addQuizzModal="bs-modal"
+  [config]="{ backdrop: 'static' }"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="dialog-static-name"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-body text-center">
+        <label>Caso clínico agregado con éxito.</label>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,231 @@
+<section class="container my-5">
+  <div
+    class="row flex-column-reverse flex-md-row equalize pl-4 py-5 text-white"
+  >
+    <div class="col-md-1">
+      <ng-container *ngIf="currentUser$ | async as user">
+        <img
+          *ngIf="user.photoURL"
+          class="rounded-circle align-self-center"
+          [src]="user.photoURL"
+          name="aboutme"
+          width="60"
+          alt="Generic placeholder image"
+        />
+      </ng-container>
+      <ng-container *ngIf="AuthUser.getUser">
+        <img
+          *ngIf="AuthUser.getUser.photoURL"
+          class="rounded-circle align-self-center"
+          [src]="AuthUser.getUser.photoURL"
+          name="aboutme"
+          width="60"
+          alt="Generic placeholder image"
+        />
+      </ng-container>
+    </div>
+
+    <div class="col-md-11 p-0">
+      <form [formGroup]="createContribution">
+        <input
+          #box
+          id="box"
+          type="text"
+          class="form-control"
+          formControlName="body"
+          placeholder="Deja un comentario"
+          style="height: 60px"
+          (keyup.enter)="addContribution()"
+        />
+      </form>
+    </div>
+  </div>
+  <ng-container *ngFor="let contribution of result">
+    <div class="row flex-column-reverse flex-md-row equalize pl-4 text-dark">
+      <div class="col-md-1">
+        <img
+          *ngIf="contribution.user.photo"
+          class="rounded-circle align-self-center"
+          [src]="contribution.user.photo"
+          name="aboutme"
+          width="60"
+          alt="Generic placeholder image"
+        />
+      </div>
+      <div class="col-md-11 p-0">
+        <div class="row flex-column-reverse flex-md-row equalize text-dark">
+          <div class="col-md-4">
+            <label
+              >{{ contribution.user.name }}
+              {{ contribution.user.lastname }}</label
+            >
+          </div>
+          <!-- <div class="col-md-4">
+            <label>{{ contribution.createdat }}</label>
+          </div> -->
+
+        </div>
+        <div class="row">
+        <div class="col-md-11">
+          <label>{{ contribution.body }}</label>
+        </div>
+        <ng-container *ngIf="AuthUser.getUser">
+          <ng-container *ngIf="AuthUser.getUser.role.name == 'Admin'">
+        <div  class="col-md-1">
+          <button class="icons" type="button"(click)="deleteCommentModal.show(); saveid(contribution.id)" ><i  class="fas fa-minus-circle"></i></button>
+        </div>
+      </ng-container>
+    </ng-container>
+    <ng-container *ngIf="currentUser$ | async as user">
+      <ng-container *ngIf="user.role.name == 'Admin'">
+        <div  class="col-md-1">
+          <button class="icons" type="button"(click)="deleteCommentModal.show(); saveid(contribution.id)" ><i  class="fas fa-minus-circle"></i></button>
+        </div>
+      </ng-container>
+    </ng-container>
+      </div>
+      </div>
+      <div class="col-md-1"></div>
+      <button
+        class="btn mt-2 p-0"
+        type="button"
+        (click)="changestatus(contribution.id)"
+      >
+        Responder
+      </button>
+
+    </div>
+
+      <div class="row flex-column-reverse flex-md-row equalize text-dark">
+        <div class="col-md-1"></div>
+        <div class="col-md-11 pr-0 mt-2">
+
+        <ng-container *ngIf="this.idForo==contribution.id">
+          <form [formGroup]="createContribution">
+            <input
+              #response
+              id="response"
+              type="text"
+              class="form-control"
+              formControlName="response"
+              placeholder="Deja un comentario"
+              style="height: 60px"
+              (keyup.enter)="addResponse()"
+            />
+          </form>
+        </ng-container>
+    </div>
+
+    </div>
+    <ng-container *ngFor="let response of contribution.responses">
+      <div
+        class="row flex-column-reverse flex-md-row equalize pl-4 py-5 text-dark"
+      >
+        <div class="col-md-1"></div>
+        <div class="col-md-1">
+          <img
+            *ngIf="response.user.photo"
+            class="rounded-circle align-self-center"
+            [src]="response.user.photo"
+            name="aboutme"
+            width="60"
+            alt="Generic placeholder image"
+          />
+        </div>
+        <div class="col-md-10 p-0">
+          <div class="row flex-column-reverse flex-md-row equalize text-dark">
+            <div class="col-md-4">
+              <label
+                >{{ response.user.name }} {{ response.user.lastname }}</label
+              >
+            </div>
+            <!-- <div class="col-md-4">
+              <label>{{response.createdat}}</label>
+            </div> -->
+          </div>
+          <div class="row">
+            <div class="col-md-11">
+              <label>{{ response.body }}</label>
+            </div>
+            <ng-container *ngIf="AuthUser.getUser">
+              <ng-container *ngIf="AuthUser.getUser.role.name == 'Admin'">
+            <div  class="col-md-1">
+              <button   class="icons"type="button"(click)="deleteCommentModal.show(); saveid(response.id)" ><i  class="fas fa-minus-circle"></i></button>
+            </div>
+          </ng-container>
+        </ng-container>
+        <ng-container *ngIf="currentUser$ | async as user">
+          <ng-container *ngIf="user.role.name == 'Admin'">
+            <div  class="col-md-1">
+              <button   class="icons"type="button"(click)="deleteCommentModal.show(); saveid(response.id)" ><i  class="fas fa-minus-circle"></i></button>
+            </div>
+          </ng-container>
+        </ng-container>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+  </ng-container>
+</section>
+<!-- Delete Modal -->
+<!--<div-->
+<!--  class="modal fade"-->
+<!--  bsModal-->
+<!--  #deleteCommentModal="bs-modal"-->
+<!--  [config]="{ backdrop: 'static' }"-->
+<!--  tabindex="-1"-->
+<!--  role="dialog"-->
+<!--  aria-labelledby="dialog-static-name"-->
+<!--&gt;-->
+<!--  <div class="modal-dialog">-->
+<!--    <div class="modal-content">-->
+<!--      <div class="modal-header pb-0">-->
+<!--        <div class="text-center">-->
+<!--          <b><label class="text-danger "-->
+<!--            >-->
+<!--              ELIMINAR-->
+
+<!--            </label>-->
+<!--            <br/>-->
+<!--          </b>-->
+<!--        </div>-->
+
+<!--        <button-->
+<!--          type="button"-->
+<!--          class="close pull-right"-->
+<!--          aria-label="Close"-->
+<!--          (click)="deleteCommentModal.hide()"-->
+<!--        >-->
+<!--          <span aria-hidden="true">&times;</span>-->
+<!--        </button>-->
+<!--      </div>-->
+<!--      <div class="modal-body text-center">-->
+
+<!--        <b><label-->
+<!--          class="text-dark"-->
+<!--        >-->
+<!--         ¡IMPORTANTE!-->
+<!--        </label></b>-->
+<!--<label >Esta seguro de eliminar el comentario.</label>-->
+<!--        <div class="d-flex justify-content-center pt-4">-->
+<!--          <button-->
+<!--            type="button"-->
+<!--            class="btn btn-secondary "-->
+<!--            (click)="deleteCommentModal.hide()"-->
+<!--          >-->
+<!--            Cancel-->
+<!--          </button>-->
+<!--          <button-->
+<!--            type="button"-->
+<!--            class="btn btn-danger ml-2"-->
+<!--            (click)="removeContribution()"-->
+<!--          >-->
+
+<!--            Eliminar-->
+<!--          </button>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--</div>-->
+
