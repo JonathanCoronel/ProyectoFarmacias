@@ -34,7 +34,7 @@ export class CoursePageComponent implements OnInit {
     private route: ActivatedRoute,
   ) { }
 
-
+//JOLAFSLOASDADSOADSASLADS
   ngOnInit(): void {
     this.userService.currentUser.subscribe(
       currentUser => {
