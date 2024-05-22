@@ -8,7 +8,7 @@ import { User, UserClaims } from '../../../shared/interfaces/user';
 import { CourseService } from '../../../core/services/course.service';
 import { Course } from '../../../shared/interfaces/course';
 import Swal from 'sweetalert2';
-import { Location } from '@angular/common';
+
 
 
 @Component({
@@ -32,7 +32,6 @@ export class CoursePageComponent implements OnInit {
     private topicService: TopicService,
     private router: Router,
     private route: ActivatedRoute,
-    private location: Location
   ) { }
 
 
@@ -115,7 +114,4 @@ export class CoursePageComponent implements OnInit {
     this.router.navigate(['/course', this.courseId, 'topic', topicId]).then();
   }
 
-  prevPag(): void {
-    this.location.back(); // Retrocede a la página anterior en el historial del navegador
-  }
 }
