@@ -14,10 +14,10 @@
   <div class="title">
       <h1>
         <span>
-          <a type="button" href="/">
-            <i class="fas fa-chevron-left leaft" (click)="prevPag()"></i>
+          <a type="button" (click)="goBack()">
+            <i class="fas fa-chevron-left leaft"></i>
           </a>
-          {{titleCourse}} 
+          {{titleCourse}}
         </span>
       </h1>
     <ng-container *ngIf="user && claims?.isAdmin">

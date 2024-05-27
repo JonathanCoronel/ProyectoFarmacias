@@ -26,11 +26,11 @@
 <section class="containerTitle">
       <h3>
         <span>
-          <a type="button" [routerLink]="['/course', courseId]">
+          <a type="button"  (click)="goBack()">
                 <i class="fas fa-chevron-left"></i>
           </a>
         </span>
-        {{ topic?.title }}
+        {{ topic?.title }} 
       </h3>
 </section>
 <div class="contenedorGeneral">

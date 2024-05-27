@@ -105,4 +105,8 @@ export class TopicPageComponent implements OnInit {
     this.router.navigate(['/course/add-subtopic', this.idRoute]).then();
   }
 
+  goBack(): void {
+    this.router.navigate(['../'], { relativeTo: this.route });
+  }
+
 }
