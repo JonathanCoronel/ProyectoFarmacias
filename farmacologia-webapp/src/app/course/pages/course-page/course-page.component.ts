@@ -113,5 +113,9 @@ export class CoursePageComponent implements OnInit {
   sendToTopicView(topicId: string): void {
     this.router.navigate(['/course', this.courseId, 'topic', topicId]).then();
   }
+  
+  goBack(): void {
+    this.router.navigate(['../'], { relativeTo: this.route });
+  }
 
 }

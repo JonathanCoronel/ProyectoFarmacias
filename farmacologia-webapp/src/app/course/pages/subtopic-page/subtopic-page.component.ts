@@ -73,5 +73,8 @@ export class SubtopicPageComponent implements OnInit {
     this.tabs[this.tabs.indexOf(tab)].active = true;
   }
 
+  goBack(): void {
+    this.router.navigate(['../../'], { relativeTo: this.route });
+  }
 }
 
