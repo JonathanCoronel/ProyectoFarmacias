@@ -1,6 +1,6 @@
 <div class="p-5">
   <div class="container px-5">
-
+    <button (click)="updateSO()">Test</button>
     <div class="row">
       <div class="col-md-4 mt-4">
         <div class="bg-dark text-white rounded p-3">
@@ -12,7 +12,7 @@
           </ng-container>
         </div>
       </div>
-      <div class="col-md-8">
+      <div class="col-md-8" *ngIf="selectedOption === 'Lectura'">
 
         <div class="row">
           <div class="col align-self-end">
@@ -145,7 +145,7 @@
     </div>
 
     <div class="row">
-      <div class="container-fluid p-5">
+      <div class="container-fluid p-5" *ngIf="selectedOption === 'Video'">
 
         <ul class="nav nav-tabs" id="myTab" role="tablist">
           <li class="nav-item" role="presentation">

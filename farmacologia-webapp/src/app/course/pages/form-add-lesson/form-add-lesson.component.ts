@@ -11,6 +11,7 @@ import {Subscription} from 'rxjs/internal/Subscription';
 import Swal from 'sweetalert2';
 import { User, UserClaims } from '../../../shared/interfaces/user';
 import { UserService } from '../../../core/services/user.service';
+import { SharedService } from '../../../core/services/sharedOp.service';
 
 
 const RESOURCES_TYPES = {
@@ -34,6 +35,7 @@ export class FormAddLessonComponent implements OnInit {
     private resourceService: ResourceService,
     private router: Router,
     private userService: UserService,
+    private sharedService: SharedService
   ) {
     this.createContent = this.fb.group({
       title: ['', Validators.required],
@@ -97,6 +99,7 @@ export class FormAddLessonComponent implements OnInit {
   reference: Resource;
   image: File[] = [];
   subtopicId!: string;
+  selectedOption: string;
 
   // @ViewChild('addContentcModal', { static: false })
   // addContentModal: ModalDirective;
@@ -392,6 +395,11 @@ export class FormAddLessonComponent implements OnInit {
         this.image.push(files[i]);
       }
     }
+  }
+
+  updateSO(){
+    this.selectedOption = this.sharedService.getSelectedOption();
+    console.log(this.selectedOption)
   }
 
 }

@@ -43,6 +43,10 @@ body {
 .opciones{
   margin-left: 8px;
 }
+.opciones.selected {
+  background-color: red;
+}
+
 .menu i{
   color: #D9D9D9;
 }
