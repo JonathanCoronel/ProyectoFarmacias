@@ -33,6 +33,12 @@
         {{ topic?.title }} 
       </h3>
 </section>
+
+<section class="containerDes">
+  <a href="" class="navegacionActivo">Presentación</a>
+  <a  [routerLink]="['subtopic', selectedSubtopic.id]" class="navegacionDescativo">Contenido</a>
+</section>
+<hr>
 <div class="contenedorGeneral">
   <div class="menu">
     <div class="scroll">

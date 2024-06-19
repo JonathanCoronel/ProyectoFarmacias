@@ -5,6 +5,8 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Ejemplos Flex</title>
+  <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 </head>
 <body>
 <div class="container">
@@ -18,7 +20,26 @@
       {{ subtopic?.title }} 
     </h3>
   </section>
+  <section class="containerDes">
+    <a (click)="goBack()" class="navegacionDescativo">Presentación</a>
+    <a class="navegacionActivo">Contenido</a>
+  </section>
+  <hr>
   <div class="contenedorGeneral">
+    <div class="menu">
+      <div class="scroll">
+      <div  class="containerMenu" *ngFor="let subtopic of subtopics; let i = index">
+        <p class="negrita">Subtema {{ i + 1 }}: {{ subtopic.title }}</p>
+        <div class="opciones" *ngFor="let opcion of opciones">
+          <i class="fa-solid fa-check-double"></i> {{ opcion }}
+        </div>
+        <button (click)="showSubtopicInfo(subtopic,i)">Ver detalles</button>
+        <button (click)="deleteSubtopic(subtopic.id)" *ngIf="claims?.isAdmin">
+          <i class="fas fa-trash-alt text-danger"></i>
+        </button>
+      </div>
+      </div>
+    </div>
 <section >
   <div [ngSwitch]="selectedTab.name">
     <div *ngSwitchCase="'CLASES'">

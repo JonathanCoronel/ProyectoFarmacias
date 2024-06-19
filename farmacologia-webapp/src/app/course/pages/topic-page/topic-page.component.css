@@ -114,3 +114,39 @@ body {
 .aprendizaje i {
   color: #51D8E7;
 }
+
+hr{
+  color: white;
+  height: 1.5px;
+}
+
+.containerDes{
+  display: flex;
+  position: relative;
+}
+
+.containerDes .navegacionActivo{
+  margin-right: 100px;
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 24px;
+  display: flex;
+  align-items: center;
+  color: #FFFFFF;
+}
+
+.containerDes .navegacionDescativo{
+  margin-right: 100px;
+  text-decoration: none;
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 24px;
+  display: flex;
+  align-items: center;
+  color: #FFFFFF;
+  opacity: 0.5;
+}
