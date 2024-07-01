@@ -42,9 +42,11 @@ body {
 }
 .opciones{
   margin-left: 8px;
+  cursor: pointer;
+  
 }
 .opciones.selected {
-  background-color: red;
+  background-color: rgb(94, 253, 253);
 }
 
 .menu i{
@@ -138,7 +140,6 @@ hr{
   display: flex;
   align-items: center;
   color: #FFFFFF;
-  cursor: pointer;
 }
 
 .containerDes .navegacionDescativo{
@@ -153,5 +154,4 @@ hr{
   align-items: center;
   color: #FFFFFF;
   opacity: 0.5;
-  cursor: pointer;
 }

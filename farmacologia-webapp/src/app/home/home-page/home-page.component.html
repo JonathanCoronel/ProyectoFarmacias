@@ -174,12 +174,12 @@
 <div class="botones">
   <div *ngFor="let course of courses; let i = index">
     <div class="google pointer-on-hover" (click)="selectCourse(course)">
-      <div class="col-2 align-self-end justify-content-end" *ngIf="user && claims?.isAdmin">
-        <a type="button" (click)="deleteCourse(course.id)">
-          <i class="fas fa-trash-alt text-danger"></i>
-        </a>
-      </div>
-      <div [ngClass]="getCourseColorClass(i)" class="celeste">
+      <div [ngClass]="getCourseClasses(course, i)"class="celeste">
+        <div class="col-2 align-self-end justify-content-end delete-button" *ngIf="user && claims?.isAdmin">
+          <a type="button" (click)="deleteCourse(course.id)">
+            <i class="fas fa-trash-alt text-danger"></i>
+          </a>
+        </div>
       </div>
       <div class="blanco">
       <h5> {{ course.title }}  </h5>

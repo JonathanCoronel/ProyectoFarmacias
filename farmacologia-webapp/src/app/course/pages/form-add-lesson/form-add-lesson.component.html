@@ -2,20 +2,11 @@
   <div class="container px-5">
     <button (click)="updateSO()">Test</button>
     <div class="row">
-      <div class="col-md-4 mt-4">
-        <div class="bg-dark text-white rounded p-3">
-          <h3>Navegación</h3>
-          <ng-container *ngIf="contents?.length > 0">
-            <ul *ngFor="let content of contents">
-              <li> {{ content.title | titlecase }} </li>
-            </ul>
-          </ng-container>
-        </div>
-      </div>
+
       <div class="col-md-8" *ngIf="selectedOption === 'Lectura'">
 
         <div class="row">
-          <div class="col align-self-end">
+          <div class="col align-self-end" *ngIf="claims?.isAdmin">
             <small class="fst-italic">Agregar contenido</small><a type="button" class="btn text-decoration-none"
                                                                   data-bs-toggle="modal"
                                                                   data-bs-target="#addContentModal">
@@ -509,11 +500,11 @@
               </div>
             </div>
           </div>
-          <!--          <div class="tab-pane fade" id="reference" role="tabpanel" aria-labelledby="reference-tab">-->
-          <!--            <div class="row">-->
-          <!--              <div class="col-sm-12">-->
-          <!--                <div class="p-5">-->
-          <!--                  <div class="container px-5">-->
+                   <div class="tab-pane fade" id="reference" role="tabpanel" aria-labelledby="reference-tab">-->
+                  <div class="row">-->
+                      <div class="col-sm-12">-->
+                      <div class="p-5">-->
+                          <div class="container px-5">-->
           <!--                    <form [formGroup]="createRef">-->
           <!--                      <div class="mb-3 row">-->
           <!--                        <label class="col-sm-2 col-form-label">Nombre</label>-->
