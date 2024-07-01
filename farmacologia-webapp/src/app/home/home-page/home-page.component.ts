@@ -201,6 +201,11 @@ export class HomePageComponent implements OnInit {
     return colors[colorIndex];
   }
 
+  getCourseClasses(course: Course, index: number): string {
+    const baseClass = this.getCourseColorClass(index);
+    return this.selectedCourse?.id === course.id ? `selected ${baseClass}` : baseClass;
+  }
+
   selectCourse(course: Course): void {
     this.selectedCourse = {
       id: course.id,

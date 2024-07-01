@@ -59,7 +59,10 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+  width: 210px;
 }
+
+
 .containerhome{
   width: 50%;
   display: flex;
@@ -96,6 +99,11 @@ body {
   display: flex;
   flex-wrap: wrap;
 }
+
+.delete-button {
+margin-bottom: 18%;
+}
+
 #title {
   font-size: 40px;
 }
@@ -198,7 +206,6 @@ hr {
   flex-wrap: wrap;
 }
 .google .celeste{
-  background-color: #A2D6E5;
   width: 50%;
   height: 100%;
   border-top-left-radius: 100px; /* Esquina superior izquierda redondeada */
@@ -227,6 +234,7 @@ hr {
   display: flex;
   flex-wrap: wrap;
   margin-top: -35px;
+  gap: 20px;
 }
 .seleccionar{
   width: 100%;
@@ -238,15 +246,34 @@ hr {
   font-weight: 800;
 }
 .color-course-1 {
-  background-color:#F9E4E4; /* Color para el Curso 1 */
+  /*background-color:#F9E4E4;*/ /* Color para el Curso 1 */
+  background: linear-gradient(to bottom, #B6B0EC 100%, #A18CFC00 0%);
+}
+
+.color-course-1.selected {
+  background: linear-gradient(179.86deg, #A18CFC 0.12%, rgba(161, 140, 252, 0) 159.73%);
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3);
 }
 
 .color-course-2 {
-  background: linear-gradient(to bottom, #A18CFC 100%, #A18CFC00 0%);
+  background: linear-gradient(to bottom, #F9E4E4 100%, #A18CFC00 0%);
 }
+
+.color-course-2.selected {
+  background: linear-gradient(180deg, rgba(231, 134, 134, 0.6) 23.81%, rgba(249, 228, 228, 0) 147.87%);
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3);
+}
+
 .color-course-3 {
-  background-color: #A2D6E5; /* Color para el Curso 3 */
+  /*background-color: #A2D6E5;*/ /* Color para el Curso 3 */
+  background: linear-gradient(to bottom, #A2D6E5 100%, #A18CFC00 0%);
 }
+
+.color-course-3.selected {
+  background: linear-gradient(180deg, rgba(95, 208, 242, 0.6) 20.31%, rgba(162, 214, 230, 0) 100%);
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3);
+}
+
 .google:active{
   transform: scale(0.9); /* Reducción de tamaño al hacer clic */
 }
