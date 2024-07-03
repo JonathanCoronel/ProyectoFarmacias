@@ -21,7 +21,7 @@ export class SubtopicPageComponent implements OnInit {
   resources: any = [];
   selectedSubtopic: Subtopic | null = null;
   subtopicIndex: number = 0;
-  opciones: string[] = ["Lectura", "Video", "Foro"];
+  opciones: string[] = ["Lectura", "Video", "Imagen", "Foro"];
   tabs = [
     {name: 'CLASES', active: true},
     // {name: 'APORTES', active: false},
@@ -84,6 +84,9 @@ export class SubtopicPageComponent implements OnInit {
         subtopic => this.subtopic = subtopic
       );
     });
+
+    this.selectedOption = "Lectura";
+    this.updateSelectedOptions("Lectura")
   }
 
   changeSection(tab: any) {
