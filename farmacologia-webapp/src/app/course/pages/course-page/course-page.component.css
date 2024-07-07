@@ -1,8 +1,11 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
 body {
-  background: linear-gradient(to bottom, #5168E7 55%, #0A345D 45%);
+  background: linear-gradient(to bottom, #5168E7 70%, #0A345D 30%);
   height: 100vh;
   width: 100%;
   overflow: auto;
+  padding-top: 60px;
+  font-family: 'Inter';
 }
 .container{
   width: 100%;
@@ -11,6 +14,15 @@ body {
 .title{
   color: white;
   margin-left: 60px;
+  margin-bottom: 30px;
+  font-style: normal;
+  font-weight: 800;
+  font-size: 48px;
+  line-height: 58px;
+}
+
+.title a{
+  margin-right: 30px;
 }
 .title i{
   color: white;
@@ -26,11 +38,11 @@ body {
 }
 .card-footer{
   position: absolute;
-  top: 72.6%;
-  right: 0.2px;
+  top: 85%;
+  left: 0px;
   border: none;
-  height: 137px;
-  width: 100%;
+  height: 68.5px;
+  width: 100.2%;
   color: white;
   border-radius: 0 0 10px 10px;
   cursor: pointer;
@@ -43,7 +55,6 @@ body {
 }
 
 .card-footer a{
-  font-family: 'Inter';
   font-style: normal;
   font-weight: 800;
   font-size: 20px;
@@ -52,13 +63,18 @@ body {
 }
 
 .content{
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 19px;
   color: #365C8D;
   padding: 10px 10px;
   height: 65%;
 }
 .content h4{
-  font-size: 37px;
+  font-style: normal;
   font-weight: 700;
+  font-size: 40px;
   line-height: 48px;
   letter-spacing: 0em;
   text-align: left;
@@ -72,8 +88,7 @@ body {
 
 .imagen {
   width: 100%;
-  height: 400px;
-  background-color: #51D8E7;
+  height: 350px;
 }
 
 img{
@@ -93,9 +108,9 @@ img{
   border-radius: 10px;
   position: absolute;
   width: 90%; /* Puedes ajustar el ancho según tus necesidades */
-  height: 500px; /* Puedes ajustar la altura según tus necesidades */
+  height: 450px; /* Puedes ajustar la altura según tus necesidades */
   background: linear-gradient(to bottom, #3E53D0 62%, #2C41B7 33%);
-  bottom: 6%;
+  bottom: 15%;
   right: 0;
   display: flex;
   flex-direction: column;
@@ -108,7 +123,7 @@ img{
   flex-direction: column;
   z-index: 999;
   width: 90%;
-  height: 500px;
+  height: 450px;
   top: 0;
   left: 0;
   padding: 0px 20px;
@@ -147,6 +162,11 @@ img{
 }
 .flechas1, .flechas2 i{
   font-size: 30px;
+}
+
+.flechas1:hover i , .flechas2:hover i  {
+  /* Estilos para el icono cuando el ratón está encima de la flecha 1 */
+  color: #51D8E7; /* Cambia el color del icono */
 }
 
 .card .navegacion_curso{
