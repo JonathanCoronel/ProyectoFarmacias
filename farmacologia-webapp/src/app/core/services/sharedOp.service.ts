@@ -5,16 +5,13 @@ import { BehaviorSubject } from 'rxjs';
   providedIn: 'root'
 })
 export class SharedService {
-  private selectedOptionSource = new BehaviorSubject<string>(''); 
-  selectedOption$ = this.selectedOptionSource.asObservable();
+  private selectedOptionSubject = new BehaviorSubject<string>('');
 
-  constructor() {}
-
-  setSelectedOption(option: string): void { 
-    this.selectedOptionSource.next(option);
+  setSelectedOption(option: string) {
+    this.selectedOptionSubject.next(option);
   }
 
-  getSelectedOption(): string { 
-    return this.selectedOptionSource.getValue();
+  getSelectedOption() {
+    return this.selectedOptionSubject.asObservable();
   }
 }

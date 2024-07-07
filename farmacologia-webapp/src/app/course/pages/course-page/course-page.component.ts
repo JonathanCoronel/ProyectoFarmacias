@@ -8,6 +8,7 @@ import { User, UserClaims } from '../../../shared/interfaces/user';
 import { CourseService } from '../../../core/services/course.service';
 import { Course } from '../../../shared/interfaces/course';
 import Swal from 'sweetalert2';
+import { SharedService } from '../../../core/services/sharedOp.service';
 
 
 
@@ -20,21 +21,25 @@ export class CoursePageComponent implements OnInit {
 
   courseId!: string;
   course!: Course;
-  topics: Topic [] = [];
+  topics: Topic[] = [];
   public user!: User;
   public claims!: UserClaims;
   currentCourseIndex = 0;
-  currentCourse: Topic | 0;
-  titleCourse: string;
+  currentCourse: Topic | null = null;
+  titleCourse: string | null = null;
+  selectedOption: string | null = null;
+  mouseOverFlecha1: boolean = false;
+  mouseOverFlecha2: boolean = false;
+
   constructor(
     private userService: UserService,
     private courseService: CourseService,
+    private sharedService: SharedService,
     private topicService: TopicService,
     private router: Router,
     private route: ActivatedRoute,
   ) { }
 
-//JOLAFSLOASDADSOADSASLADS
   ngOnInit(): void {
     this.userService.currentUser.subscribe(
       currentUser => {
@@ -52,6 +57,17 @@ export class CoursePageComponent implements OnInit {
     this.route.params.subscribe((params: Params) => {
       this.courseId = params.courseId;
       this.titleCourse = params.nombre;
+
+      const currentCourse = this.courseService.getCurrentCourse();
+      if (!currentCourse) {
+        this.courseService.setCurrentCourse({ id: '', title: '', description: '' } as Course); // Establece un curso vacío si no hay uno actual
+      }
+      
+      this.courseService.setSelectedOption(this.courseService.getSelectedOption() || this.titleCourse);
+
+      this.selectedOption = this.courseService.getSelectedOption();
+      this.updateSelectedOptions(this.selectedOption || '');
+
       this.courseService.course(this.courseId).subscribe(course => {
         this.course = course;
         this.topicService.getTopicsOfCourse(this.courseId).subscribe(
@@ -62,8 +78,11 @@ export class CoursePageComponent implements OnInit {
         );
       });
     });
-  }
 
+    this.sharedService.getSelectedOption().subscribe(option => {
+      this.selectedOption = option;
+    });
+  }
 
   nextCourse(): void {
     this.currentCourseIndex++;
@@ -76,11 +95,12 @@ export class CoursePageComponent implements OnInit {
   prevCourse(): void {
     this.currentCourseIndex--;
     if (this.currentCourseIndex < 0) {
-      this.currentCourseIndex = this.topics.length - 1;}
+      this.currentCourseIndex = this.topics.length - 1;
+    }
     this.currentCourse = this.topics[this.currentCourseIndex];
   }
-  deleteTopic(topicId: string): void {
 
+  deleteTopic(topicId: string): void {
     Swal.fire({
       title: '¿Está seguro?',
       text: 'Esta acción es irreversible',
@@ -91,7 +111,6 @@ export class CoursePageComponent implements OnInit {
       confirmButtonText: 'Sí, eliminar'
     }).then((result) => {
       if (result.isConfirmed) {
-
         this.topicService.deleteTopic(topicId).then(
           () => {
             Swal.fire(
@@ -103,7 +122,6 @@ export class CoursePageComponent implements OnInit {
         );
       }
     });
-
   }
 
   form(): void {
@@ -111,11 +129,15 @@ export class CoursePageComponent implements OnInit {
   }
 
   sendToTopicView(topicId: string): void {
+    this.courseService.setSelectedOption(this.selectedOption); // Guardar la opción seleccionada antes de navegar
     this.router.navigate(['/course', this.courseId, 'topic', topicId]).then();
   }
-  
+
   goBack(): void {
     this.router.navigate(['../'], { relativeTo: this.route });
   }
 
+  updateSelectedOptions(options: string): void {
+    this.sharedService.setSelectedOption(options);
+  }
 }

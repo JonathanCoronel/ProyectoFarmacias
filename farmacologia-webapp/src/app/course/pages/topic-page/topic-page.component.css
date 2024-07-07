@@ -1,8 +1,10 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
 body {
   background: linear-gradient(to bottom, #5168E7 60%, #0A345D 40%);
   width: 100%;
   height: 100vh;
   overflow: auto;
+  font-family: 'Inter';
 }
 .container{
   width: 80%;
@@ -19,6 +21,9 @@ body {
 .containerTitle{
   color: white;
   margin-bottom: 20px;
+}
+.containerTitle a {
+  margin-right: 20px;
 }
 .containerTitle i {
   color: white;
@@ -135,6 +140,7 @@ hr{
   display: flex;
   align-items: center;
   color: #FFFFFF;
+  text-decoration: none;
 }
 
 .containerDes .navegacionDescativo{
@@ -150,3 +156,24 @@ hr{
   color: #FFFFFF;
   opacity: 0.5;
 }
+
+.linead hr{
+  position: absolute;
+  border: none;
+  height: 2px;
+  width: 125px;
+  
+}
+
+.linead .linea1{
+  background-color: #FFFFFF;
+  top: 23px;
+  left: 0px;
+}
+
+.linead .linea2{
+  top: 23px;
+  width: 120px;
+  left: 210px;
+}
+

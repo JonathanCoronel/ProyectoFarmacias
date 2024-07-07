@@ -1,6 +1,5 @@
 <div class="p-5">
   <div class="container px-5">
-    <button (click)="updateSO()">Test</button>
     <div class="row">
 
       <div class="col-md-8" *ngIf="selectedOption === 'Lectura'">
@@ -136,33 +135,37 @@
     </div>
 
     <div class="row">
-      <div class="container-fluid p-5" *ngIf="selectedOption === 'Video'">
+      <div class="container-fluid p-5">
 
-        <ul class="nav nav-tabs" id="myTab" role="tablist">
+        <!-- <ul class="nav nav-tabs" id="myTab" role="tablist">
+          
           <li class="nav-item" role="presentation">
-            <button class="nav-link active" id="video-tab" data-bs-toggle="tab" data-bs-target="#video" type="button"
+            <button class="nav-link" id="video-tab" data-bs-toggle="tab" data-bs-target="#video" type="button"
                     role="tab" aria-controls="video" aria-selected="true">Video
             </button>
           </li>
+
           <li class="nav-item" role="presentation">
             <button class="nav-link" id="image-tab" data-bs-toggle="tab" data-bs-target="#image" type="button"
-                    role="tab" aria-controls="image" aria-selected="false">Imagen
+                    role="tab" aria-controls="image" aria-selected="true">Imagen
             </button>
           </li>
-          <!--          <li class="nav-item" role="presentation">-->
-          <!--            <button class="nav-link" id="reference-tab" data-bs-toggle="tab" data-bs-target="#reference" type="button"-->
-          <!--                    role="tab" aria-controls="reference" aria-selected="false">Artículos-->
-          <!--            </button>-->
-          <!--          </li>-->
-        </ul>
+
+          <li class="nav-item" role="presentation">
+            <button class="nav-link" id="reference-tab" data-bs-toggle="tab" data-bs-target="#reference" type="button"
+                    role="tab" aria-controls="reference" aria-selected="true">Artículos
+            </button>
+          </li>  
+
+        </ul> -->
 
         <div class="tab-content clearfix">
-          <div class="tab-pane fade show active" id="video" role="tabpanel" aria-labelledby="video-tab">
+          <div class="tab-pane fade show active" id="video" role="tabpanel" aria-labelledby="video-tab" *ngIf="selectedOption === 'Video'">
             <div class="row">
               <div class="col-sm-12">
                 <div class="p-5">
                   <div class="row">
-                    <div class="col">
+                    <div class="col" *ngIf="user && claims?.isAdmin">
                       <small class="fst-italic">Agregar video</small><a type="button"
                                                                         class="btn text-decoration-none"
                                                                         data-bs-toggle="modal"
@@ -337,12 +340,12 @@
               </div>
             </div>
           </div>
-          <div class="tab-pane fade" id="image" role="tabpanel" aria-labelledby="image-tab">
+          <div class="tab-pane fade show active" id="image" role="tabpanel" aria-labelledby="image-tab" *ngIf="selectedOption === 'Imagen'">
             <div class="row">
               <div class="col-sm-12">
                 <div class="p-5">
                   <div class="row">
-                    <div class="col">
+                    <div class="col" *ngIf="user && claims?.isAdmin">
                       <small class="fst-italic">Agregar imagen</small><a type="button"
                                                                          class="btn text-decoration-none"
                                                                          data-bs-toggle="modal"
@@ -500,52 +503,53 @@
               </div>
             </div>
           </div>
-                   <div class="tab-pane fade" id="reference" role="tabpanel" aria-labelledby="reference-tab">-->
-                  <div class="row">-->
-                      <div class="col-sm-12">-->
-                      <div class="p-5">-->
-                          <div class="container px-5">-->
-          <!--                    <form [formGroup]="createRef">-->
-          <!--                      <div class="mb-3 row">-->
-          <!--                        <label class="col-sm-2 col-form-label">Nombre</label>-->
-          <!--                        <div class="col-sm-10">-->
-          <!--                          <input-->
-          <!--                            type="text"-->
-          <!--                            class="form-control"-->
-          <!--                            aria-describedby="emailHelp"-->
-          <!--                            formControlName="name"-->
-          <!--                          />-->
-          <!--                        </div>-->
-          <!--                      </div>-->
-          <!--                      <div class="mb-3 row">-->
-          <!--                        <label class="col-sm-2 col-form-label">Descripcion</label>-->
-          <!--                        <div class="col-sm-10">-->
-          <!--                                    <textarea-->
-          <!--                                      type="text"-->
-          <!--                                      class="form-control description"-->
-          <!--                                      aria-describedby="emailHelp"-->
-          <!--                                      formControlName="description"-->
-          <!--                                    >-->
-          <!--                                    </textarea>-->
-          <!--                        </div>-->
-          <!--                      </div>-->
-          <!--                      <div class="mb-3 row">-->
-          <!--                        <label class="col-sm-2 col-form-label">URL</label>-->
-          <!--                        <div class="col-sm-10">-->
-          <!--                          <input-->
-          <!--                            type="text"-->
-          <!--                            class="form-control"-->
-          <!--                            aria-describedby="emailHelp"-->
-          <!--                            formControlName="url"-->
-          <!--                          />-->
-          <!--                        </div>-->
-          <!--                      </div>-->
-          <!--                    </form>-->
-          <!--                  </div>-->
-          <!--                </div>-->
-          <!--              </div>-->
-          <!--            </div>-->
-          <!--          </div>-->
+
+          <div class="tab-pane fade show active" id="reference" role="tabpanel" aria-labelledby="reference-tab" *ngIf="selectedOption === 'Foro'">
+            <div class="row">
+              <div class="col-sm-12">
+                <div class="p-5">
+                  <div class="container px-5">
+                    <form [formGroup]="createRef">
+                      <div class="mb-3 row">
+                        <label class="col-sm-2 col-form-label">Nombre</label>
+                        <div class="col-sm-10">
+                          <input
+                            type="text"
+                            class="form-control"
+                            aria-describedby="emailHelp"
+                            formControlName="name"
+                          />
+                        </div>
+                      </div>
+                      <div class="mb-3 row">
+                        <label class="col-sm-2 col-form-label">Descripcion</label>
+                        <div class="col-sm-10">
+                          <textarea
+                            type="text"
+                            class="form-control description"
+                            aria-describedby="emailHelp"
+                            formControlName="description"
+                          ></textarea>
+                        </div>
+                      </div>
+                      <div class="mb-3 row">
+                        <label class="col-sm-2 col-form-label">URL</label>
+                        <div class="col-sm-10">
+                          <input
+                            type="text"
+                            class="form-control"
+                            aria-describedby="emailHelp"
+                            formControlName="url"
+                          />
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
         </div>
       </div>
     </div>

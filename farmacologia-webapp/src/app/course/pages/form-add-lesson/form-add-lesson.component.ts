@@ -166,6 +166,9 @@ export class FormAddLessonComponent implements OnInit {
       apiLoaded = true;
     }
 
+    this.sharedService.getSelectedOption().subscribe(option => {
+      this.selectedOption = option;
+    });
   }
 
   addContent(): void {
@@ -396,10 +399,4 @@ export class FormAddLessonComponent implements OnInit {
       }
     }
   }
-
-  updateSO(){
-    this.selectedOption = this.sharedService.getSelectedOption();
-    console.log(this.selectedOption)
-  }
-
 }

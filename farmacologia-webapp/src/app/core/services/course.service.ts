@@ -18,6 +18,9 @@ export class CourseService {
 
   private coursesRef: AngularFirestoreCollection;
 
+  private currentCourse: Course | null = null;
+  private selectedOption: string | null = null;
+
   constructor(
     private af: AngularFirestore,
     private uploadStorageService: UploadStorageService,
@@ -38,6 +41,21 @@ export class CourseService {
     return saveProcess;
   }
 
+  setCurrentCourse(course: Course) {
+    this.currentCourse = course;
+  }
+
+  getCurrentCourse(): Course | null {
+    return this.currentCourse;
+  }
+
+  setSelectedOption(option: string) {
+    this.selectedOption = option;
+  }
+
+  getSelectedOption(): string | null {
+    return this.selectedOption;
+  }
 
   private async createCourse(course: Course, files: File[]): Promise<Course> {
     const courseCreated: Course =  {
