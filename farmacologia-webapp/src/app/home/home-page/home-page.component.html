@@ -171,23 +171,26 @@
   <div class="seleccionar">
     <h5>Seleccione una píldora</h5>
   </div>
-<div class="botones">
-  <div *ngFor="let course of courses; let i = index">
-    <div class="google pointer-on-hover" (click)="selectCourse(course)">
-      <div [ngClass]="getCourseClasses(course, i)"class="celeste">
-        <div class="col-2 align-self-end justify-content-end delete-button" *ngIf="user && claims?.isAdmin">
-          <a type="button" (click)="deleteCourse(course.id)">
-            <i class="fas fa-trash-alt text-danger"></i>
-          </a>
+  <div class="botones-scrollable">
+    <div class="courses-container">
+      <button class="botonAnterior" (click)="previousPage()" [disabled]="currentPage === 0"><</button>
+      <div *ngFor="let course of courses.slice(currentPage * itemsPerPage, (currentPage + 1) * itemsPerPage); let i = index" class="course-item">
+        <div class="google pointer-on-hover" (click)="selectCourse(course)">
+          <div [ngClass]="getCourseClasses(course, i)" class="celeste">
+            <div class="col-2 align-self-end justify-content-end delete-button" *ngIf="user && claims?.isAdmin">
+              <a type="button" (click)="deleteCourse(course.id)">
+                <i class="fas fa-trash-alt text-danger"></i>
+              </a>
+            </div>
+          </div>
+          <div class="blanco">
+            <h5>{{ course.title }}</h5>
+          </div>
         </div>
       </div>
-      <div class="blanco">
-      <h5> {{ course.title }}  </h5>
-      </div>
+      <button class="botonSiguiente" (click)="nextPage()" [disabled]="(currentPage + 1) * itemsPerPage >= courses.length">></button>
     </div>
-
   </div>
-</div>
   </div>
 </div>
 </body>

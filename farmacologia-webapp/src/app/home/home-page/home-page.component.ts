@@ -1,4 +1,4 @@
-import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { User, UserClaims } from '../../shared/interfaces/user';
 import { UserService } from '../../core/services/user.service';
@@ -8,14 +8,12 @@ import Swal from 'sweetalert2';
 import { Course } from '../../shared/interfaces/course';
 import { CourseService } from '../../core/services/course.service';
 
-
 @Component({
   selector: 'app-home-page',
   templateUrl: './home-page.component.html',
   styleUrls: ['./home-page.component.css']
 })
 export class HomePageComponent implements OnInit {
-
   @ViewChild('imageFile', {static: false}) inputImage: ElementRef;
 
   public user!: User;
@@ -27,6 +25,8 @@ export class HomePageComponent implements OnInit {
   image: File[] = [];
   courses: Course[] = [];
   selectedCourse: { id: string, title: string, description: string } | null = null;
+  currentPage = 0;
+  itemsPerPage = 3;
 
   private savingSubscription: Subscription | null = null;
 
@@ -43,7 +43,6 @@ export class HomePageComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
     this.courseService.getCoursesCollection().valueChanges().subscribe(
       courses => {
         this.courses = courses;
@@ -63,7 +62,6 @@ export class HomePageComponent implements OnInit {
         );
       }
     );
-
   }
 
   get formIsValid(): boolean {
@@ -78,17 +76,14 @@ export class HomePageComponent implements OnInit {
   }
 
   send(courseId: string, nombre): void {
-
     if (this.user) {
       this.router.navigate(['/course', courseId, nombre]).then();
     } else {
       this.router.navigate(['/ingresar']).then();
     }
-
   }
 
   deleteCourse(courseId: string): void {
-
     Swal.fire({
       title: '¿Está seguro?',
       text: 'Esta acción es irreversible',
@@ -99,7 +94,6 @@ export class HomePageComponent implements OnInit {
       confirmButtonText: 'Sí, eliminar'
     }).then((result) => {
       if (result.isConfirmed) {
-
         this.courseService.deleteCourse(courseId).then(
           () => {
             Swal.fire(
@@ -111,14 +105,12 @@ export class HomePageComponent implements OnInit {
         );
       }
     });
-
   }
 
   detectImages(event): void {
     const files: FileList | null = event.target.files;
     this.image = [];
     if (files) {
-      // tslint:disable-next-line:prefer-for-of
       for (let i = 0; i < files.length; i++) {
         this.image.push(files[i]);
       }
@@ -126,7 +118,6 @@ export class HomePageComponent implements OnInit {
   }
 
   addCourse(): void {
-
     this.isValidated = true;
     this.isSaving = true;
 
@@ -146,7 +137,6 @@ export class HomePageComponent implements OnInit {
         }
       );
     } else {
-
       const newCourse: Course = {
         title: this.createCourseForm.value.title,
         description: this.createCourseForm.value.description
@@ -196,7 +186,7 @@ export class HomePageComponent implements OnInit {
 
   getCourseColorClass(index: number): string {
     const colors = ['color-course-1', 'color-course-2', 'color-course-3'];
-    const colorIndex = index % colors.length; // Usamos el operador módulo para asegurarnos de que el índice esté dentro del rango
+    const colorIndex = index % colors.length;
 
     return colors[colorIndex];
   }
@@ -213,5 +203,17 @@ export class HomePageComponent implements OnInit {
       description: course.description
     };
     console.log(this.selectedCourse);
+  }
+
+  nextPage(): void {
+    if ((this.currentPage + 1) * this.itemsPerPage < this.courses.length) {
+      this.currentPage++;
+    }
+  }
+
+  previousPage(): void {
+    if (this.currentPage > 0) {
+      this.currentPage--;
+    }
   }
 }

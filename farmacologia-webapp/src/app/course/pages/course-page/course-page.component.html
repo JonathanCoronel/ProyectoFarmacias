@@ -14,10 +14,10 @@
   <div class="title">
       <h1>
         <span>
-          <a type="button" (click)="goBack()">
-            <i class="fas fa-chevron-left leaft"></i>
+          <a type="button" href="/">
+            <i class="fas fa-chevron-left leaft" (click)="goBack()"></i>
           </a>
-          {{selectedOption}}
+          {{titleCourse}}
         </span>
       </h1>
     <ng-container *ngIf="user && claims?.isAdmin">
@@ -43,7 +43,7 @@
       </div>
     </div>
     <div class="card" *ngIf="currentCourse">
-      <span class="navegacion_curso">CURSO {{currentCourseIndex + 1 }} DE {{topics.length}}</span> 
+      {{currentCourseIndex + 1 }} / {{topics.length}}
       <div class="card-body">
         <div class="content">
           <h4 class="card-title">{{ currentCourse.title }}</h4>
@@ -71,16 +71,3 @@
 </section>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
