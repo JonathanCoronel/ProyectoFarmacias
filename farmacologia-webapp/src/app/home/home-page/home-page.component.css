@@ -240,12 +240,38 @@ hr {
   display: flex;
   flex-direction: column;
 }
-.botones{
-  width: 100%;
+.botones-scrollable {
   display: flex;
-  flex-wrap: wrap;
-  margin-top: -35px;
-  gap: 20px;
+  align-items: center;
+  width: 1408px;
+  margin: 0 auto;
+  height: 150px;
+}
+
+.courses-container {
+  display: flex;
+  overflow: hidden;
+  width: 100%;
+  height: 150%;
+}
+
+.courses-container .botonSiguiente , .courses-container .botonAnterior  {
+  position: absolute;
+  background-color: #0A345D;/* Ajusta este color según tu diseño */
+  color: #FFFFFF;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  margin: 0 10px;
+  top: 590px;
+}
+
+.courses-container .botonSiguiente{
+  left: 1410px;
+}
+
+.courses-container .botonAnterior{
+  left: 70px;
 }
 .seleccionar{
   width: 100%;
@@ -296,4 +322,3 @@ hr {
 .pointer-on-hover {
   cursor: pointer;
 }
-
