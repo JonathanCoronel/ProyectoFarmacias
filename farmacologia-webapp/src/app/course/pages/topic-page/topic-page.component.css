@@ -187,3 +187,15 @@ hr{
   margin: 5px;
 }
 
+.info .subtemaInfo .borrar{
+  border-radius: 10px;
+  background: white;
+  border-color: black;
+  border: none;
+  width: 30px;
+  height: 36px;
+  margin: 5px;
+  color: black;
+  position: absolute;
+}
+

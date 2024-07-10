@@ -87,11 +87,20 @@ export class TopicPageComponent implements OnInit {
               'Subtema eliminado correctamente',
               'success'
             );
+            this.subtopicService.getSubtopicsOfTopic(this.topicId).subscribe(subtopics => {
+              this.subtopics = subtopics;
+              if (this.subtopics.length > 0) {
+                this.showSubtopicInfo(this.subtopics[0], 0);
+              } else {
+                this.selectedSubtopic = null;
+              }
+            });
           }
         );
       }
     });
   }
+  
 
   form(): void {
     this.router.navigate(['/course/add-subtopic', this.idRoute]).then();
