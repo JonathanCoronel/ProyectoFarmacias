@@ -177,3 +177,13 @@ hr{
   left: 210px;
 }
 
+.botonSiguiente{
+  border-radius: 10px;
+  background: black;
+  border: none;
+  width: 100px;
+  height: 36px;
+  color: black;
+  margin: 5px;
+}
+

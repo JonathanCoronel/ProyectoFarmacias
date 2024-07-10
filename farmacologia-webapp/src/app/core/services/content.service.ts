@@ -96,4 +96,27 @@ export class ContentService {
         shareReplay(1)
       );
   }
+
+  
+  createId(){
+    return this.angularFirestore.createId();
+}
+
+  createDoc(data: any, path: string, id: string){
+    const collection = this.angularFirestore.collection(path);
+    return collection.doc(id).set(data);
+  }
+
+  getDoc<tipo>(path: string, id: string){
+      return this.angularFirestore.collection(path).doc<tipo>(id).valueChanges();
+  }
+
+  updateDoc(path: string, id: string, data: any) {
+      return this.angularFirestore.collection(path).doc(id).update(data)
+  }
+
+  deleteDoc(path: string, id: string) {
+      return this.angularFirestore.collection(path).doc(id).delete();
+  }
+
 }
