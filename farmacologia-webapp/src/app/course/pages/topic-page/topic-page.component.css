@@ -177,11 +177,11 @@ hr{
   left: 210px;
 }
 
-.botonSiguiente{
+.info .subtemaInfo .botonSiguiente{
   border-radius: 10px;
-  background: black;
+  background: white;
   border: none;
-  width: 100px;
+  width: 30px;
   height: 36px;
   color: black;
   margin: 5px;

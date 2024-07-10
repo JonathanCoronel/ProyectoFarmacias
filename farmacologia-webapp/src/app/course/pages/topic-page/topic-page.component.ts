@@ -109,4 +109,9 @@ export class TopicPageComponent implements OnInit {
     }
     this.showSubtopicInfo(this.subtopics[this.subtopicIndex], this.subtopicIndex);
   }
+
+  cambiarSubtema2(direccion: 'next' | 'prev'): void {
+    this.subtopicIndex = (this.subtopicIndex - 1 + this.subtopics.length) % this.subtopics.length;
+    this.showSubtopicInfo(this.subtopics[this.subtopicIndex], this.subtopicIndex);
+  }
 }
