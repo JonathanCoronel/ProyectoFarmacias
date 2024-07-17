@@ -6,6 +6,7 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class SharedService {
   private selectedOptionSubject = new BehaviorSubject<string>('');
+  private userBoolSubject = new BehaviorSubject<boolean>(false);
 
   setSelectedOption(option: string) {
     this.selectedOptionSubject.next(option);
@@ -13,5 +14,13 @@ export class SharedService {
 
   getSelectedOption() {
     return this.selectedOptionSubject.asObservable();
+  }
+
+  setUserBool(userOp: boolean) {
+    this.userBoolSubject.next(userOp);
+  }
+
+  getUserBool() {
+    return this.userBoolSubject.asObservable();
   }
 }

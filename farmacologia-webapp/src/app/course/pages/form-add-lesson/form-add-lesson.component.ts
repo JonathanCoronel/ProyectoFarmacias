@@ -1,11 +1,14 @@
+import { Subtopic } from './../../../shared/interfaces/subtopic';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { ModalDirective } from 'ngx-bootstrap/modal';
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { ContentService } from 'src/app/core/services/content.service';
 import { ResourceService } from 'src/app/core/services/resource.service';
 import { Content } from 'src/app/shared/interfaces/content';
+import { Foro } from 'src/app/shared/interfaces/foro';
+import { Respuesta } from 'src/app/shared/interfaces/respuesta';
 import { Resource } from 'src/app/shared/interfaces/resource';
 import {Subscription} from 'rxjs/internal/Subscription';
 import Swal from 'sweetalert2';
@@ -50,10 +53,11 @@ export class FormAddLessonComponent implements OnInit {
       description: ['', Validators.required],
       url: ['', Validators.required]
     });
-    this.createRef = this.fb.group({
-      name: ['', Validators.required],
-      description: ['', Validators.required],
-      url: ['', Validators.required]
+    this.createPregunta = this.fb.group({
+      respuesta: ['', Validators.required],
+    });
+    this.createRespuesta = this.fb.group({
+      pregunta: ['', Validators.required],
     });
   }
 
@@ -86,7 +90,8 @@ export class FormAddLessonComponent implements OnInit {
   createContent: FormGroup;
   createVideo: FormGroup;
   createImage: FormGroup;
-  createRef: FormGroup;
+  createPregunta: FormGroup;
+  createRespuesta: FormGroup;
 
   private contentSavingSubscription: Subscription | null = null;
   private videoSavingSubscription: Subscription | null = null;
@@ -102,8 +107,21 @@ export class FormAddLessonComponent implements OnInit {
   selectedOption: string;
   nombreUsuario: string;
   correoUsuario: string;
-  descripcion: string;
-  pregunta: string;
+  resUser: boolean = false;
+  foro: Foro = {
+    id: '',
+    subtopicId: '',
+    pregunta: '',
+  }
+  respuesta: Respuesta = {
+    id: '',
+    subtopicId: '',
+    comentario: '',
+    nombreUsuario: '',
+    correoUsuario: '',
+  }
+  foros: Foro[] = [];
+  respuestas: Respuesta[] = [];
 
   // @ViewChild('addContentcModal', { static: false })
   // addContentModal: ModalDirective;
@@ -120,6 +138,7 @@ export class FormAddLessonComponent implements OnInit {
   createImageIsValid!: boolean;
   createImageIsValidated!: boolean;
   createImageIsSaving!: boolean;
+  
 
   public file: File;
 
@@ -141,7 +160,7 @@ export class FormAddLessonComponent implements OnInit {
         this.userService.userDocument(currentUser.email).valueChanges().subscribe(
           user => {
             this.user = user;
-            this.nombreUsuario = user.name;
+            this.nombreUsuario = user.displayName;
             this.correoUsuario = user.email;
             this.userService.claimsDocument(user.email).valueChanges().subscribe(
               claims => this.claims = claims
@@ -175,6 +194,18 @@ export class FormAddLessonComponent implements OnInit {
     this.sharedService.getSelectedOption().subscribe(option => {
       this.selectedOption = option;
     });
+
+    this.getPreguntas();
+    this.getRespuestas();
+
+    // this.userService.currentUser.subscribe(currentUser => {
+    //   this.userService.userDocument(currentUser.email).valueChanges().subscribe(user => {
+    //     const usuarioYaRespondio = this.respuestas.some(respuesta => respuesta.correoUsuario === user.email);
+    //     this.resUser = !usuarioYaRespondio;
+    //     console.log(this.resUser)
+    //   });
+    // });
+
   }
 
   addContent(): void {
@@ -216,6 +247,47 @@ export class FormAddLessonComponent implements OnInit {
         }
       );
     }
+  }
+
+  addPregunta() {
+    this.foro.subtopicId = this.subtopicId;
+    const path = 'foro';
+    const id = this.contentService.createId();
+    this.foro.id = id;
+
+    this.contentService.createDoc(this.foro, path, id).then(res => {
+      console.log('respuesta ->', res);
+    });
+  }
+
+  getPreguntas(){
+    this.contentService.getCollectionsAdmin<Foro>('foro').subscribe( res => {
+      this.foros = res;
+      const foroEncontrado = this.foros.find(foro => foro.subtopicId === this.subtopicId);
+      if (foroEncontrado) {
+        this.foro = foroEncontrado;
+      }
+    });
+  }
+
+  addRespuesta() {
+    this.respuesta.nombreUsuario = this.nombreUsuario;
+    this.respuesta.correoUsuario = this.correoUsuario;
+    this.respuesta.subtopicId = this.subtopicId;
+    const path = 'respuesta';
+    const id = this.contentService.createId();
+    this.respuesta.id = id;
+
+    this.contentService.createDoc(this.respuesta, path, id).then(res => {
+      console.log('respuesta ->', res);
+    });
+  }
+
+  getRespuestas(){
+    this.contentService.getCollectionsAdmin<Respuesta>('respuesta').subscribe( res => {
+      this.respuestas = res;
+      this.respuestas = this.respuestas.filter(respuesta => respuesta.subtopicId === this.subtopicId);
+    });
   }
 
   addVideo(): void{
@@ -336,6 +408,38 @@ export class FormAddLessonComponent implements OnInit {
 
   }
 
+  deletePregunta(foroId: string): void {
+    const path = 'foro';
+    Swal.fire({
+      title: '¿Está seguro?',
+      text: 'Esta acción es irreversible',
+      icon: 'info',
+      showCancelButton: true,
+      confirmButtonColor: '#264653',
+      cancelButtonColor: '#dc3545',
+      confirmButtonText: 'Sí, eliminar'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.contentService.deleteDoc(path, foroId).then(
+          () => {
+            Swal.fire(
+              'Eliminado',
+              'Contenido eliminado correctamente',
+              'success'
+            );
+          }
+        ).catch(error => {
+          console.error('Error al eliminar la pregunta:', error);
+          Swal.fire(
+            'Error',
+            'No se pudo eliminar la pregunta. Intente nuevamente más tarde.',
+            'error'
+          );
+        });
+      }
+    });
+  }  
+
   deleteResource(resourceId: string): void{
 
     Swal.fire({
@@ -404,5 +508,9 @@ export class FormAddLessonComponent implements OnInit {
         this.image.push(files[i]);
       }
     }
+  }
+
+  updateUserRes(userBool: boolean): void {
+    this.sharedService.setUserBool(userBool);
   }
 }
