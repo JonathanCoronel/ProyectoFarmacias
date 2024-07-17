@@ -98,9 +98,14 @@ export class ContentService {
   }
 
   
+  getCollectionsAdmin<tipo>(path: string){
+    const collection = this.angularFirestore.collection<tipo>(path);
+    return collection.valueChanges();
+  }
+
   createId(){
     return this.angularFirestore.createId();
-}
+  }
 
   createDoc(data: any, path: string, id: string){
     const collection = this.angularFirestore.collection(path);

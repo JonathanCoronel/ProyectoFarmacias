@@ -509,46 +509,91 @@
               <div class="col-sm-12">
                 <div class="p-5">
                   <div class="container px-5">
-                    <form [formGroup]="createRef">
-                      <div class="mb-3 row">
-                        <label class="col-sm-2 col-form-label">Nombre</label>
-                        <div class="col-sm-10">
-                          <input
-                            type="text"
-                            class="form-control"
-                            aria-describedby="emailHelp"
-                            formControlName="name"
-                          />
+                    <div class="row">
+                      <div class="col align-self-end" *ngIf="claims?.isAdmin && !foro.pregunta">
+                        <small class="fst-italic">Agregar Pregunta</small>
+                        <a type="button" class="btn text-decoration-none" data-bs-toggle="modal" data-bs-target="#addResponseModal">
+                          <i class="fas fa-plus-circle add"></i>
+                        </a>
+                      </div>
+                    </div>
+          
+                    <ng-container>
+                      <div class="modal fade" id="addResponseModal" tabindex="-1" aria-labelledby="addResponseModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-xl">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h5 class="modal-title" id="addResponseModalLabel">AGREGAR NUEVA PREGUNTA</h5>
+                              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                              <div>
+                                <form>
+                                  <!-- Pregunta -->
+                                  <div class="mb-3 row">
+                                    <label class="col-sm-2 col-form-label">Pregunta</label>
+                                    <div class="col-sm-10">
+                                      <input type="text" [(ngModel)]="foro.pregunta" name="pregunta" placeholder="Ingrese la pregunta">
+                                    </div>
+                                  </div>
+                                </form>
+                              </div>
+                            </div>
+
+                            <div class="modal-footer">
+                              <button type="button" class="btn btn-save" (click)="addPregunta()" data-bs-dismiss="modal">
+                                <span>AGREGAR</span>
+                              </button>
+                            </div>
+                          </div>
                         </div>
                       </div>
-                      <div class="mb-3 row">
-                        <label class="col-sm-2 col-form-label">Descripcion</label>
-                        <div class="col-sm-10">
-                          <textarea
-                            type="text"
-                            class="form-control description"
-                            aria-describedby="emailHelp"
-                            formControlName="description"
-                          ></textarea>
+                    </ng-container>
+
+                    <div class="col-1" *ngIf="claims?.isAdmin && foro.pregunta">
+
+                      <a type="button" (click)="deletePregunta(foro.id)">
+                        <i class="fas fa-trash-alt text-danger"></i>
+                      </a>
+      
+                    </div>
+
+                    <b><p>{{ foro.pregunta }}</p></b>
+
+                    <div *ngIf="foro.pregunta">
+                      <p>Incluya una respuesta escrita de uno o dos párrafos (100-200 palabras). Luego, revisa lo que otros estudiantes han escrito y comenta al menos dos de sus publicaciones.</p>
+
+                        <h1>Tu respuesta</h1>
+
+                        <div class="resBot">
+                          <form>
+                            <!-- Respuesta -->
+                            <div class="mb-3 row">
+                              <label class="col-sm-2 col-form-label">Respuesta</label>
+                              <div class="col-sm-10">
+                                <input type="text" [(ngModel)]="respuesta.comentario" name="comentario" placeholder="Ingrese la Respuesta">
+                              </div>
+                            </div>
+                          </form>
+                          <button type="button" (click)="addRespuesta()">
+                            <span>RESPONDER</span>
+                          </button>
                         </div>
+                      
+                      <h1>Respuestas</h1>
+                      <div *ngFor="let respuesta of respuestas">
+                        <b><p>{{respuesta.nombreUsuario}}</p></b>
+                        <p>{{respuesta.comentario}}</p>
                       </div>
-                      <div class="mb-3 row">
-                        <label class="col-sm-2 col-form-label">URL</label>
-                        <div class="col-sm-10">
-                          <input
-                            type="text"
-                            class="form-control"
-                            aria-describedby="emailHelp"
-                            formControlName="url"
-                          />
-                        </div>
-                      </div>
-                    </form>
+                    </div>
+
+
                   </div>
                 </div>
               </div>
             </div>
           </div>
+          
           
         </div>
       </div>
