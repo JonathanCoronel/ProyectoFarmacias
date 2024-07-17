@@ -43,8 +43,10 @@
     </section>
 </section>
 <hr>
+
 <div class="contenedorGeneral">
-  <div class="menu">
+
+  <!-- <div class="menu">
     <div class="scroll">
     <div  class="containerMenu" *ngFor="let subtopic of subtopics; let i = index">
       <p class="negrita">Subtema {{ i + 1 }}: {{ subtopic.title }}</p>
@@ -57,12 +59,19 @@
       </button>
     </div>
     </div>
-  </div>
+  </div> -->
 
   <div class="info"  >
     <h5>Curso seleccionado</h5>
     <div class="subtemaInfo" *ngIf="selectedSubtopic">
-    <p>Subtema {{ subtopicIndex + 1 }} de {{ subtopics.length }}</p>
+      <p>
+        <button class="botonSiguiente" (click)="cambiarSubtema2('next')"><</button>
+        Subtema {{ subtopicIndex + 1 }} de {{ subtopics.length }}
+        <button class="botonSiguiente" (click)="cambiarSubtema('next')">></button>
+        <button class="borrar"(click)="deleteSubtopic(selectedSubtopic.id)" *ngIf="claims?.isAdmin">
+          <i class="fas fa-trash-alt text-danger"></i>
+        </button>
+      </p>
       <p class="negrita">SUBTEMA {{ subtopicIndex + 1 }} : {{ selectedSubtopic.title }}</p>
     <button [routerLink]="['subtopic', selectedSubtopic.id]">Comenzar</button>
       <p>!Completa el primer subtema! Continua Aprendiendo</p>

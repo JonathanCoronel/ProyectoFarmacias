@@ -10,7 +10,7 @@ const routes: Routes = [
     // ruta inicio de sesión
     path: 'course',
     loadChildren: () => import('./course/course.module').then(m => m.CourseModule),
-    canActivate: [IsAuthenticatedGuard],
+    //canActivate: [IsAuthenticatedGuard],
   },
   {
     // ruta inicio de sesión

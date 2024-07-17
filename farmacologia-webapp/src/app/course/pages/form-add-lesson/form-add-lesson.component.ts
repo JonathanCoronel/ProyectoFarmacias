@@ -100,6 +100,10 @@ export class FormAddLessonComponent implements OnInit {
   image: File[] = [];
   subtopicId!: string;
   selectedOption: string;
+  nombreUsuario: string;
+  correoUsuario: string;
+  descripcion: string;
+  pregunta: string;
 
   // @ViewChild('addContentcModal', { static: false })
   // addContentModal: ModalDirective;
@@ -137,6 +141,8 @@ export class FormAddLessonComponent implements OnInit {
         this.userService.userDocument(currentUser.email).valueChanges().subscribe(
           user => {
             this.user = user;
+            this.nombreUsuario = user.name;
+            this.correoUsuario = user.email;
             this.userService.claimsDocument(user.email).valueChanges().subscribe(
               claims => this.claims = claims
             );

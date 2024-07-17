@@ -8,7 +8,6 @@ import { Subtopic } from '../../../shared/interfaces/subtopic';
 import { SubtopicService } from '../../../core/services/subtopic.service';
 import Swal from 'sweetalert2';
 
-
 @Component({
   selector: 'app-topic-page',
   templateUrl: './topic-page.component.html',
@@ -28,6 +27,7 @@ export class TopicPageComponent implements OnInit {
   public user!: User;
   public claims!: UserClaims;
   subtopicIndex: number = 0;
+
   constructor(
     private route: ActivatedRoute,
     private topicService: TopicService,
@@ -37,18 +37,15 @@ export class TopicPageComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-
     this.userService.currentUser.subscribe(currentUser => {
       this.userService.userDocument(currentUser.email).valueChanges().subscribe(user => {
         this.user = user;
         this.userService.claimsDocument(user.email).valueChanges().subscribe(claims => this.claims = claims);
 
-        // Move the route.params subscription here
         this.route.params.subscribe((params: Params) => {
           this.courseId = params.courseId;
           this.topicId = params.topicId;
 
-          // Move the topic and subtopic retrieval here
           this.topicService.topicById(this.topicId).subscribe(topic => {
             this.topic = topic;
             console.log('Topic:', this.topic); // Check if it's defined here
@@ -67,15 +64,11 @@ export class TopicPageComponent implements OnInit {
     });
   }
 
-  // send(id: string, text: object): void {
-  //   // this.topicService.processCountdown(text);
-  //   this.router.navigate(['/course/tema/subtema', id]).then();
-  // }
-
   showSubtopicInfo(subtopic: Subtopic, index: number): void {
     this.selectedSubtopic = subtopic;
     this.subtopicIndex = index;
   }
+
   public deleteSubtopic(subtopicId: string): void {
     Swal.fire({
       title: '¿Está seguro?',
@@ -87,7 +80,6 @@ export class TopicPageComponent implements OnInit {
       confirmButtonText: 'Sí, eliminar'
     }).then((result) => {
       if (result.isConfirmed) {
-
         this.subtopicService.deleteSubtopic(subtopicId).then(
           () => {
             Swal.fire(
@@ -95,11 +87,20 @@ export class TopicPageComponent implements OnInit {
               'Subtema eliminado correctamente',
               'success'
             );
+            this.subtopicService.getSubtopicsOfTopic(this.topicId).subscribe(subtopics => {
+              this.subtopics = subtopics;
+              if (this.subtopics.length > 0) {
+                this.showSubtopicInfo(this.subtopics[0], 0);
+              } else {
+                this.selectedSubtopic = null;
+              }
+            });
           }
         );
       }
     });
   }
+  
 
   form(): void {
     this.router.navigate(['/course/add-subtopic', this.idRoute]).then();
@@ -109,4 +110,17 @@ export class TopicPageComponent implements OnInit {
     this.router.navigate(['../'], { relativeTo: this.route });
   }
 
+  cambiarSubtema(direccion: 'next' | 'prev'): void {
+    if (direccion === 'next') {
+      this.subtopicIndex = (this.subtopicIndex + 1) % this.subtopics.length;
+    } else if (direccion === 'prev') {
+      this.subtopicIndex = (this.subtopicIndex - 1 + this.subtopics.length) % this.subtopics.length;
+    }
+    this.showSubtopicInfo(this.subtopics[this.subtopicIndex], this.subtopicIndex);
+  }
+
+  cambiarSubtema2(direccion: 'next' | 'prev'): void {
+    this.subtopicIndex = (this.subtopicIndex - 1 + this.subtopics.length) % this.subtopics.length;
+    this.showSubtopicInfo(this.subtopics[this.subtopicIndex], this.subtopicIndex);
+  }
 }

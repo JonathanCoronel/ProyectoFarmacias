@@ -38,11 +38,12 @@ export class FormComponent implements OnInit {
     });
   }
 
-  isValid: boolean;
-  isValidated: boolean;
-  isSaving = false;
+  isValid: boolean = false;
+  isValidated: boolean = false;
+  isSaving: boolean = false;
   image: File[] = [];
-  courseId!: string;
+  courseId: string = '';
+  courseName: string = '';
 
   // requirements
 
@@ -118,9 +119,12 @@ export class FormComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    console.log('el form')
 
     this.activatedRoute.params.subscribe(async (params: Params) => {
         this.courseId = params.courseId;
+        this.courseName = params.nombre;
+        console.log('Course ID:', this.courseId);
       });
 
     this.userService.currentUser.subscribe(
@@ -150,10 +154,9 @@ export class FormComponent implements OnInit {
   }
 
   addTopic(): void {
-
     this.isValidated = true;
     this.isSaving = true;
-
+  
     if (!!this.savingSubscription) {
       this.isSaving = false;
       return;
@@ -164,14 +167,10 @@ export class FormComponent implements OnInit {
         icon: 'error',
         title: 'Formulario incompleto',
         text: 'Por favor, asegúrese de ingresar todos los campos del formulario.',
-      }).then(
-        () => {
-          this.isSaving = false;
-        }
-      );
-
+      }).then(() => {
+        this.isSaving = false;
+      });
     } else {
-
       const newTopic: Topic = {
         courseId: this.courseId,
         title: this.createTopic.value.title,
@@ -179,7 +178,7 @@ export class FormComponent implements OnInit {
         requirements: this.createTopic.value.requirements,
         learning: this.createTopic.value.learning
       };
-
+  
       this.savingSubscription = this.topicService.saveTopic(newTopic, this.image).subscribe(
         async createdCourse => {
           if (createdCourse) {
@@ -203,7 +202,8 @@ export class FormComponent implements OnInit {
     }).then(
       () => {
         this.isValidated = false;
-        this.router.navigate(['/course', this.courseId ]);
+        this.router.navigate(['/course/', this.courseId , this.courseName]);
+        
       });
   }
 

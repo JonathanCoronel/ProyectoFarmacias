@@ -24,21 +24,20 @@
       <a class="navegacionActivo">Contenido</a>
     </section>
     <hr>
+
     <div class="contenedorGeneral">
       <div class="menu">
         <div class="scroll">
-          <div class="containerMenu" *ngFor="let subtopic of subtopics; let i = index">
-            <p class="negrita">Subtema {{ i + 1 }}: {{ subtopic.title }}</p>
+            <p class="negrita">Subtema: {{ subtopic.title }}</p>
             <div class="opciones" *ngFor="let opcion of opciones" (click)="selectOption(opcion)" [class.selected]="selectedOption === opcion">
               <i class="fa-solid fa-check-double"></i> {{ opcion }}
             </div>
-            <button (click)="showSubtopicInfo(subtopic, i)">Ver detalles</button>
             <button (click)="deleteSubtopic(subtopic.id)" *ngIf="claims?.isAdmin">
               <i class="fas fa-trash-alt text-danger"></i>
             </button>
-          </div>
         </div>
       </div>
+      
       <section>
         <div [ngSwitch]="selectedTab.name">
           <div *ngSwitchCase="'CLASES'">
