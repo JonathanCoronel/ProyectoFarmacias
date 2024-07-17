@@ -15,7 +15,7 @@
       <h1>
         <span>
           <a type="button" href="/">
-            <i class="fas fa-chevron-left leaft" (click)="goBack()"></i>
+            <i class="fas fa-chevron-left leaft" (click)="prevCourse()"></i>
           </a>
           {{titleCourse}}
         </span>
@@ -23,7 +23,7 @@
     <ng-container *ngIf="user && claims?.isAdmin">
       <button type="button" class="btn" data-toggle="modal" data-target="#newCourse" data-whatever="@mdo"
               style="font-size: 80%; font-weight: 400; color: #707070;"
-              [routerLink]="['add-topic']">Agregar nuevo tema
+              [routerLink]="['add-topic']"> Agregar nuevo tema
       </button>
     </ng-container>
   </div>
@@ -43,7 +43,9 @@
       </div>
     </div>
     <div class="card" *ngIf="currentCourse">
-      {{currentCourseIndex + 1 }} / {{topics.length}}
+      <div class="numeroTitulo">
+        CURSO {{currentCourseIndex + 1 }} DE {{topics.length}}
+      </div>
       <div class="card-body">
         <div class="content">
           <h4 class="card-title">{{ currentCourse.title }}</h4>

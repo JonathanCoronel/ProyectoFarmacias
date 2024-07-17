@@ -33,6 +33,11 @@ body {
   z-index: 1;
   border-radius: 10px;
 }
+
+.card .numeroTitulo{
+  margin-left: 2.7%;
+  margin-top: 3%;
+}
 .card-body {
   display: flex;
 }

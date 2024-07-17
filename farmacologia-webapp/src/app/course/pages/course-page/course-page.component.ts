@@ -24,7 +24,7 @@ export class CoursePageComponent implements OnInit {
   public claims!: UserClaims;
   currentCourseIndex = 0;
   currentCourse: Topic | 0;
-  titleCourse: string;
+  titleCourse: string = '';
   constructor(
     private userService: UserService,
     private courseService: CourseService,
@@ -50,9 +50,10 @@ export class CoursePageComponent implements OnInit {
 
     this.route.params.subscribe((params: Params) => {
       this.courseId = params.courseId;
-      this.titleCourse = params.nombre;
       this.courseService.course(this.courseId).subscribe(course => {
         this.course = course;
+        this.titleCourse = this.course.title;
+        console.log(this.courseId)
         this.topicService.getTopicsOfCourse(this.courseId).subscribe(
           topics => {
             this.topics = topics;
@@ -98,6 +99,7 @@ export class CoursePageComponent implements OnInit {
               'Tema eliminado correctamente',
               'success'
             );
+            this.router.navigate(['/course', this.courseId, this.course.title]);
           }
         );
       }
@@ -106,14 +108,11 @@ export class CoursePageComponent implements OnInit {
   }
 
   form(): void {
+    console.log(this.courseId)
     this.router.navigate(['/course', this.courseId, 'add-topic']).then();
   }
 
   sendToTopicView(topicId: string): void {
     this.router.navigate(['/course', this.courseId, 'topic', topicId]).then();
-  }
-
-  goBack(): void {
-    this.router.navigate(['../'], { relativeTo: this.route });
   }
 }

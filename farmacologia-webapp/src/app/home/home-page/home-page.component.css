@@ -263,7 +263,7 @@ hr {
   padding: 10px 20px;
   cursor: pointer;
   margin: 0 10px;
-  top: 590px;
+  top: 595px;
 }
 
 .courses-container .botonSiguiente{
@@ -271,7 +271,7 @@ hr {
 }
 
 .courses-container .botonAnterior{
-  left: 70px;
+  left: 65px;
 }
 .seleccionar{
   width: 100%;

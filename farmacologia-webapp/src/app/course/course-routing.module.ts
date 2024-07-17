@@ -13,7 +13,7 @@ const routes: Routes = [
     component: CoursePageComponent,
   },
   {
-    path: ':courseId/add-topic',
+    path: ':courseId/:nombre/add-topic',
     component: FormComponent
   },
   {
