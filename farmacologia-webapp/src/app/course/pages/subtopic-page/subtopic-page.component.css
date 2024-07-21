@@ -134,12 +134,13 @@ hr{
   margin-right: 100px;
   font-family: 'Inter';
   font-style: normal;
-  font-weight: 400;
+  font-weight: 500;
   font-size: 20px;
   line-height: 24px;
   display: flex;
   align-items: center;
   color: #FFFFFF;
+  text-decoration: none;
 }
 
 .containerDes .navegacionDescativo{
@@ -154,4 +155,24 @@ hr{
   align-items: center;
   color: #FFFFFF;
   opacity: 0.5;
+}
+
+.linead hr{
+  position: absolute;
+  border: none;
+  height: 2px;
+  width: 125px;
+  
+}
+
+.linead .linea1{
+  background-color: #FFFFFF;
+  top: 23px;
+  left: 0px;
+}
+
+.linead .linea2{
+  top: 23px;
+  width: 120px;
+  left: 210px;
 }

@@ -6,10 +6,8 @@ import { catchError, map, mergeMap, shareReplay } from 'rxjs/operators';
 import { Subtopic } from '../../shared/interfaces/subtopic';
 import firebase from 'firebase';
 import firestore = firebase.firestore;
-import { UploadStorageService } from './upload-storage.service';
 
 const SUBTOPICS_COLLECTION_NAME = 'subtopics';
-const SUBTOPICS_BASE_PATH = '/subtopics';
 
 @Injectable({
   providedIn: 'root'
@@ -19,15 +17,14 @@ export class SubtopicService {
   private subtopicsReference!: AngularFirestoreCollection;
 
   constructor(
-    private uploadStorageService: UploadStorageService,
     private angularFirestore: AngularFirestore,
     private readonly angularFirePerformance: AngularFirePerformance
   ) {
     this.subtopicsReference = this.angularFirestore.collection(SUBTOPICS_COLLECTION_NAME);
   }
 
-  public saveSubtopic(subtopic: Subtopic, image: File[]): Observable<Subtopic | null> {
-    const saveProcess = from(this.createSubtopic(subtopic, image)).pipe(
+  public saveSubtopic(subtopic: Subtopic): Observable<Subtopic | null> {
+    const saveProcess = from(this.createSubtopic(subtopic)).pipe(
       mergeMap(async (acc) => await this.saveInDB(acc)),
       catchError((err) => {
         return of(null);
@@ -36,32 +33,25 @@ export class SubtopicService {
     return saveProcess;
   }
 
-  private async createSubtopic(subtopic: Subtopic, file): Promise<Subtopic> {
+  private async createSubtopic(subtopic: Subtopic): Promise<Subtopic> {
     const subtopicCreated: Subtopic =  {
       id: `${ (new Date()).valueOf() }`,
       title: subtopic.title,
       description: subtopic.description,
       dateCreated: new Date(),
-      topicId: subtopic.topicId,
-      image: await this.uploadStorageService.uploadImage(file, SUBTOPICS_BASE_PATH)
+      topicId: subtopic.topicId
     };
     return subtopicCreated;
   }
 
   private async saveInDB(subtopic: Subtopic): Promise<Subtopic> {
-
     const batch = this.angularFirestore.firestore.batch();
     const subtopicReference = this.subtopicsReference.doc(`${subtopic.id}`).ref;
     batch.set(subtopicReference, subtopic);
     await batch.commit();
-
     return subtopic;
   }
 
-  /**
-   * Get the firestore document of a Subtopic
-   * @param subtopicId Identifier of the Subtopic
-   */
   private subtopicDocument(subtopicId: string): AngularFirestoreDocument<Subtopic> {
     return this.angularFirestore
       .collection(SUBTOPICS_COLLECTION_NAME)

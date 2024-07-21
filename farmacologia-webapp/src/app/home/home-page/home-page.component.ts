@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { User, UserClaims } from '../../shared/interfaces/user';
 import { UserService } from '../../core/services/user.service';
@@ -14,15 +14,12 @@ import { CourseService } from '../../core/services/course.service';
   styleUrls: ['./home-page.component.css']
 })
 export class HomePageComponent implements OnInit {
-  @ViewChild('imageFile', {static: false}) inputImage: ElementRef;
-
   public user!: User;
   public claims!: UserClaims;
   createCourseForm: FormGroup;
   isValid: boolean;
   isValidated: boolean;
   isSaving = false;
-  image: File[] = [];
   courses: Course[] = [];
   selectedCourse: { id: string, title: string, description: string } | null = null;
   currentPage = 0;
@@ -66,13 +63,7 @@ export class HomePageComponent implements OnInit {
 
   get formIsValid(): boolean {
     this.isValid = this.createCourseForm.valid;
-
-    if (this.image.length < 1) {
-      this.isValid = false;
-      return this.isValid;
-    } else {
-      return this.isValid;
-    }
+    return this.isValid;
   }
 
   send(courseId: string, nombre): void {
@@ -98,23 +89,13 @@ export class HomePageComponent implements OnInit {
           () => {
             Swal.fire(
               'Eliminado',
-              'Tema eliminado correctamente',
+              'Curso eliminado correctamente',
               'success'
             );
           }
         );
       }
     });
-  }
-
-  detectImages(event): void {
-    const files: FileList | null = event.target.files;
-    this.image = [];
-    if (files) {
-      for (let i = 0; i < files.length; i++) {
-        this.image.push(files[i]);
-      }
-    }
   }
 
   addCourse(): void {
@@ -142,12 +123,11 @@ export class HomePageComponent implements OnInit {
         description: this.createCourseForm.value.description
       };
 
-      this.savingSubscription = this.courseService.saveCourse(newCourse, this.image).subscribe(
+      this.savingSubscription = this.courseService.saveCourse(newCourse).subscribe(
         async createdCourse => {
           if (createdCourse) {
             this.showSuccess();
             this.createCourseForm.reset();
-            this.inputImage.nativeElement.value = '';
           } else {
             this.showError();
           }
@@ -162,7 +142,7 @@ export class HomePageComponent implements OnInit {
   showSuccess(): void {
     Swal.fire({
       title: 'Correcto',
-      text: 'El recurso ha sido agregado correctamente',
+      text: 'El curso ha sido agregado correctamente',
       icon: 'success'
     }).then(
       () => {
