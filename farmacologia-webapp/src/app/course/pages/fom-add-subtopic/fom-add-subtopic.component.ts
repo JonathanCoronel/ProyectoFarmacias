@@ -25,7 +25,6 @@ export class FomAddSubtopicComponent implements OnInit {
   isValid: boolean;
   isValidated: boolean;
   isSaving = false;
-  image: File[] = [];
 
   constructor(
     private fb: FormBuilder,
@@ -39,9 +38,6 @@ export class FomAddSubtopicComponent implements OnInit {
       description: ['', Validators.required],
     });
   }
-
-  public file: File;
-  public parent = null;
 
   ngOnInit(): void {
     this.activatedRoute.params.subscribe(async (params: Params) => {
@@ -63,15 +59,9 @@ export class FomAddSubtopicComponent implements OnInit {
   }
 
   get formIsValid(): boolean {
-      this.isValid = this.createSubTopic.valid;
-
-      if (this.image.length === 0){
-        this.isValid = false;
-        return this.isValid;
-      } else {
-        return this.isValid;
-      }
-    }
+    this.isValid = this.createSubTopic.valid;
+    return this.isValid;
+  }
 
   addSubtopic(): void {
     this.isValidated = true;
@@ -93,14 +83,13 @@ export class FomAddSubtopicComponent implements OnInit {
         }
       );
     } else {
-
       const newSubtopic: Subtopic = {
         title: this.createSubTopic.value.title,
-        description: this.createSubTopic.value.description   ,
+        description: this.createSubTopic.value.description,
         topicId: this.topicId
       }
 
-      this.savingSubscription = this.subtopicService.saveSubtopic(newSubtopic, this.image).subscribe(
+      this.savingSubscription = this.subtopicService.saveSubtopic(newSubtopic).subscribe(
         async createdSubtopic => {
           if (createdSubtopic) {
             this.showSuccess();
@@ -112,7 +101,6 @@ export class FomAddSubtopicComponent implements OnInit {
           this.savingSubscription.unsubscribe();
         }
       );
-
     }
   }
 
@@ -124,7 +112,7 @@ export class FomAddSubtopicComponent implements OnInit {
     }).then(
       () => {
         this.isValidated = false;
-        this.router.navigate(['/course', this.courseId, 'topic', this.topicId ]);
+        this.router.navigate(['/course', this.courseId, 'topic', this.topicId]);
       });
   }
 
@@ -135,16 +123,4 @@ export class FomAddSubtopicComponent implements OnInit {
       icon: 'error',
     }).then();
   }
-
-  captureFile(event): void {
-    const files: FileList | null = event.target.files;
-    this.image = [];
-    if (files) {
-      // tslint:disable-next-line:prefer-for-of
-      for (let i = 0; i < files.length; i++) {
-        this.image.push(files[i]);
-      }
-    }
-  }
-
 }

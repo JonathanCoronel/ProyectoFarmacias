@@ -67,6 +67,18 @@ body {
   color: #FFFFFF;
 }
 
+.btn{
+  background-color: #0A345D ;
+  position: absolute;
+  left: 65%;
+  top: 9.9%;
+}
+
+.btn span{
+  color: white;
+  font-size: 20px;
+}
+
 .content{
   font-style: normal;
   font-weight: 400;

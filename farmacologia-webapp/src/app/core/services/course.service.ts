@@ -2,11 +2,9 @@ import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from '@angular/fire/firestore';
 import firebase from 'firebase';
 import firestore = firebase.firestore;
-import {from, Observable, of} from 'rxjs';
+import { from, Observable, of } from 'rxjs';
 import { catchError, map, mergeMap } from 'rxjs/operators';
 import { Course } from '../../shared/interfaces/course';
-import { UploadStorageService } from './upload-storage.service';
-
 
 const COURSES_COLLECTION_NAME = 'courses';
 const COURSES_BASE_PATH = '/courses';
@@ -23,7 +21,6 @@ export class CourseService {
 
   constructor(
     private af: AngularFirestore,
-    private uploadStorageService: UploadStorageService,
   ) {
     this.coursesRef = this.af.collection(COURSES_COLLECTION_NAME);
   }
@@ -31,8 +28,8 @@ export class CourseService {
   /**
    * Save a new course
    */
-  public saveCourse(course: Course, image: File[]): Observable<Course | null> {
-    const saveProcess = from(this.createCourse(course, image)).pipe(
+  public saveCourse(course: Course): Observable<Course | null> {
+    const saveProcess = from(this.createCourse(course)).pipe(
       mergeMap(async (acc) => await this.saveInDB(acc)),
       catchError((err) => {
         return of(null);
@@ -57,12 +54,11 @@ export class CourseService {
     return this.selectedOption;
   }
 
-  private async createCourse(course: Course, files: File[]): Promise<Course> {
+  private async createCourse(course: Course): Promise<Course> {
     const courseCreated: Course =  {
       id: `${ (new Date()).valueOf() }`, // Date Integer
       title: course.title,
-      description: course.description,
-      image: await this.uploadStorageService.uploadImage(files, COURSES_BASE_PATH)
+      description: course.description
     };
     return courseCreated;
   }
@@ -79,7 +75,6 @@ export class CourseService {
   deleteCourse(courseId: string | undefined): Promise<void> {
     return this.coursesRef.doc(courseId).delete();
   }
-
 
   /**
    * Get the firestore collection of Courses

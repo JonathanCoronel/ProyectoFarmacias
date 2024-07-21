@@ -177,6 +177,14 @@ hr {
 
   margin: auto;
 }
+
+.btn{
+  background-color: #5168E7 ;
+}
+
+.btn span{
+  color: white;
+}
 .seleccionado {
   margin-top: -40px;
 }
