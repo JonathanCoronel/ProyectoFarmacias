@@ -271,15 +271,15 @@ hr {
   padding: 10px 20px;
   cursor: pointer;
   margin: 0 10px;
-  top: 595px;
+  top: 81%;
 }
 
 .courses-container .botonSiguiente{
-  left: 1410px;
+  left: 92%;
 }
 
 .courses-container .botonAnterior{
-  left: 65px;
+  left: 3%;
 }
 .seleccionar{
   width: 100%;
