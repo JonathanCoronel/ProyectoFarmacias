@@ -7,6 +7,7 @@ import { Subscription } from 'rxjs/internal/Subscription';
 import Swal from 'sweetalert2';
 import { Course } from '../../shared/interfaces/course';
 import { CourseService } from '../../core/services/course.service';
+import { SubtopicService } from '../../core/services/subtopic.service';
 
 @Component({
   selector: 'app-home-page',
@@ -24,6 +25,8 @@ export class HomePageComponent implements OnInit {
   selectedCourse: { id: string, title: string, description: string } | null = null;
   currentPage = 0;
   itemsPerPage = 3;
+  public numberOfUsers: number = 0;
+  public numberOfSubtopics: number = 0;
 
   private savingSubscription: Subscription | null = null;
 
@@ -31,7 +34,8 @@ export class HomePageComponent implements OnInit {
     private userService: UserService,
     private router: Router,
     private fb: FormBuilder,
-    private courseService: CourseService
+    private courseService: CourseService,
+    private subtopicService: SubtopicService
   ) {
     this.createCourseForm = this.fb.group({
       title: ['', Validators.required],
@@ -59,6 +63,16 @@ export class HomePageComponent implements OnInit {
         );
       }
     );
+
+    // Obtener y contar el número de usuarios
+    this.userService.getAllUsers().subscribe(users => {
+      this.numberOfUsers = users.length;
+    });
+
+    // Obtener y contar el número de subtemas
+    this.subtopicService.getAllSubtopics().subscribe(subtopics => {
+      this.numberOfSubtopics = subtopics.length;
+    });
   }
 
   get formIsValid(): boolean {

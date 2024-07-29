@@ -128,7 +128,6 @@
             </div>
             <p [innerHTML]="content.description"></p>
           </div>
-
         </ng-container>
 
       </div>
@@ -550,6 +549,7 @@
                       </div>
                     </ng-container>
 
+
                     <div *ngFor="let foro of foros$ | async">
                       <div class="col-1" *ngIf="claims?.isAdmin && foro.pregunta">
 
@@ -601,3 +601,5 @@
     </div>
   </div>
 </div>
+
+     

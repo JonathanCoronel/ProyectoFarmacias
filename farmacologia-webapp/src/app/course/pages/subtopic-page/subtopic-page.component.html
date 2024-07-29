@@ -34,15 +34,16 @@
         <div class="scroll">
             <p class="negrita">Subtema: {{ subtopic.title }}</p>
             <div class="opciones" *ngFor="let opcion of opciones" (click)="selectOption(opcion)" [class.selected]="selectedOption === opcion">
-              <i class="fa-solid fa-check-double"></i> {{ opcion }}
+              <i class="fa-solid fa-check-double"></i> <span class="letraSelected">{{ opcion }}</span>
             </div>
+
         </div>
       </div>
       
-      <section>
+      <section class="infoprueba">
         <div [ngSwitch]="selectedTab.name">
           <div *ngSwitchCase="'CLASES'">
-            <ng-container *ngIf="user">
+            <ng-container *ngIf="user" class="contennose">
               <ng-container *ngIf="this.contents.length === 0">
                 <app-form-add-lesson></app-form-add-lesson>
               </ng-container>

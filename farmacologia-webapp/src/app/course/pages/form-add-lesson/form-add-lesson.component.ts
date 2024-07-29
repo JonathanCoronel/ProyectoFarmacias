@@ -552,4 +552,12 @@ export class FormAddLessonComponent implements OnInit {
   updateUserRes(userBool: boolean): void {
     this.sharedService.setUserBool(userBool);
   }
+
+  limitText(text: string, maxWords: number): string {
+    const words = text.split(' ');
+    if (words.length > maxWords) {
+      return words.slice(0, maxWords).join(' ') + '...';
+    }
+    return text;
+  }
 }
