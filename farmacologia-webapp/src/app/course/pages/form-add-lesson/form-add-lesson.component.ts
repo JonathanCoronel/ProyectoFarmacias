@@ -1,5 +1,5 @@
 import { Subtopic } from './../../../shared/interfaces/subtopic';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { FormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { ModalDirective } from 'ngx-bootstrap/modal';
@@ -15,6 +15,8 @@ import Swal from 'sweetalert2';
 import { User, UserClaims } from '../../../shared/interfaces/user';
 import { UserService } from '../../../core/services/user.service';
 import { SharedService } from '../../../core/services/sharedOp.service';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 
 const RESOURCES_TYPES = {
@@ -38,7 +40,8 @@ export class FormAddLessonComponent implements OnInit {
     private resourceService: ResourceService,
     private router: Router,
     private userService: UserService,
-    private sharedService: SharedService
+    private sharedService: SharedService,
+    private cdr: ChangeDetectorRef
   ) {
     this.createContent = this.fb.group({
       title: ['', Validators.required],
@@ -141,7 +144,8 @@ export class FormAddLessonComponent implements OnInit {
   
 
   public file: File;
-
+  public foros$: Observable<Foro[]>;
+  
   ngOnInit(): void {
     this.createContentIsValid = false;
     this.createContentIsValidated = false;
@@ -197,6 +201,14 @@ export class FormAddLessonComponent implements OnInit {
 
     this.getPreguntas();
     this.getRespuestas();
+
+    this.contentService.getCollectionsAdmin<Foro>('foro').subscribe(res => {
+      this.foros = res.filter(foro => foro.subtopicId === this.subtopicId);
+    });
+    
+    this.foros$ = this.contentService.getCollectionsAdmin<Foro>('foro').pipe(
+      map(foros => foros.filter(foro => foro.subtopicId === this.subtopicId))
+    );
 
     // this.userService.currentUser.subscribe(currentUser => {
     //   this.userService.userDocument(currentUser.email).valueChanges().subscribe(user => {
@@ -269,6 +281,7 @@ export class FormAddLessonComponent implements OnInit {
       }
     });
   }
+  
 
   addRespuesta() {
     this.respuesta.nombreUsuario = this.nombreUsuario;
@@ -420,25 +433,51 @@ export class FormAddLessonComponent implements OnInit {
       confirmButtonText: 'Sí, eliminar'
     }).then((result) => {
       if (result.isConfirmed) {
-        this.contentService.deleteDoc(path, foroId).then(
-          () => {
-            Swal.fire(
-              'Eliminado',
-              'Contenido eliminado correctamente',
-              'success'
-            );
-          }
-        ).catch(error => {
+        this.contentService.deleteDoc(path, foroId).then(() => {
+          Swal.fire('Eliminado', 'Pregunta eliminada correctamente', 'success');
+          this.getPreguntas(); // Actualiza la lista de preguntas
+        }).catch(error => {
           console.error('Error al eliminar la pregunta:', error);
-          Swal.fire(
-            'Error',
-            'No se pudo eliminar la pregunta. Intente nuevamente más tarde.',
-            'error'
-          );
+          Swal.fire('Error', 'No se pudo eliminar la pregunta. Intente nuevamente más tarde.', 'error');
         });
       }
     });
-  }  
+  }
+
+  
+  
+
+  // deletePregunta(foroId: string): void {
+  //   const path = 'foro';
+  //   Swal.fire({
+  //     title: '¿Está seguro?',
+  //     text: 'Esta acción es irreversible',
+  //     icon: 'info',
+  //     showCancelButton: true,
+  //     confirmButtonColor: '#264653',
+  //     cancelButtonColor: '#dc3545',
+  //     confirmButtonText: 'Sí, eliminar'
+  //   }).then((result) => {
+  //     if (result.isConfirmed) {
+  //       this.contentService.deleteDoc(path, foroId).then(
+  //         () => {
+  //           Swal.fire(
+  //             'Eliminado',
+  //             'Contenido eliminado correctamente',
+  //             'success'
+  //           );
+  //         }
+  //       ).catch(error => {
+  //         console.error('Error al eliminar la pregunta:', error);
+  //         Swal.fire(
+  //           'Error',
+  //           'No se pudo eliminar la pregunta. Intente nuevamente más tarde.',
+  //           'error'
+  //         );
+  //       });
+  //     }
+  //   });
+  // }  
 
   deleteResource(resourceId: string): void{
 

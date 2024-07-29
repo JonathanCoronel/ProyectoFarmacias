@@ -193,7 +193,7 @@ hr {
 }
 .seleccionado button{
   background:none;
-  width: 60%;
+  width: 200px;
   color: white;
   height: 30%;
   border: solid 1px #EAAB00;

@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
+import { Foro } from 'src/app/shared/interfaces/foro';
 
 @Injectable({
   providedIn: 'root'
@@ -7,6 +8,8 @@ import { BehaviorSubject } from 'rxjs';
 export class SharedService {
   private selectedOptionSubject = new BehaviorSubject<string>('');
   private userBoolSubject = new BehaviorSubject<boolean>(false);
+  private forosSubject = new BehaviorSubject<Foro[]>([]);
+  foros$ = this.forosSubject.asObservable();
 
   setSelectedOption(option: string) {
     this.selectedOptionSubject.next(option);

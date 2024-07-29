@@ -36,9 +36,6 @@
             <div class="opciones" *ngFor="let opcion of opciones" (click)="selectOption(opcion)" [class.selected]="selectedOption === opcion">
               <i class="fa-solid fa-check-double"></i> {{ opcion }}
             </div>
-            <button (click)="deleteSubtopic(subtopic.id)" *ngIf="claims?.isAdmin">
-              <i class="fas fa-trash-alt text-danger"></i>
-            </button>
         </div>
       </div>
       
