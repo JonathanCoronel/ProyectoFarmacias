@@ -14,7 +14,7 @@ const SUBTOPICS_COLLECTION_NAME = 'subtopics';
 })
 export class SubtopicService {
 
-  private subtopicsReference!: AngularFirestoreCollection;
+  private subtopicsReference!: AngularFirestoreCollection<Subtopic>;
 
   constructor(
     private angularFirestore: AngularFirestore,
@@ -88,5 +88,11 @@ export class SubtopicService {
         }),
         shareReplay(1)
       );
+  }
+
+  public getAllSubtopics(): Observable<Subtopic[]> {
+    return this.subtopicsReference.valueChanges().pipe(
+      shareReplay(1)
+    );
   }
 }

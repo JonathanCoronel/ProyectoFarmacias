@@ -1,8 +1,10 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
 body {
   background: linear-gradient(to bottom, #5168E7 60%, #0A345D 40%);
   width: 100%;
   height: 100vh;
   overflow: auto;
+  font-family: 'Inter';
 }
 .container{
   margin-top: 20px;
@@ -14,8 +16,14 @@ body {
   border-radius: 20px;
   margin: auto ;
   display: grid;
+  grid-template-columns: 25% 75%; 
   grid-template-areas:
     'menu info';
+}
+
+.scroll{
+  margin-top: 15%;
+  width: 100%;
 }
 .containerTitle{
   color: white;
@@ -31,7 +39,6 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
   padding: 20px;
 }
 .containerMenu{
@@ -46,7 +53,10 @@ body {
   
 }
 .opciones.selected {
-  background-color: rgb(94, 253, 253);
+  background-color: #5168E7  ;
+  color: white;
+  border-radius: 5px;
+  padding: 0em 0.5em;
 }
 
 .menu i{
@@ -66,9 +76,7 @@ body {
   width: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding: 30px;
+
 }
 .info h5{
   margin-left: auto;
@@ -176,3 +184,16 @@ hr{
   width: 120px;
   left: 210px;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+

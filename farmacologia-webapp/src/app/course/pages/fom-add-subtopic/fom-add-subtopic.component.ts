@@ -123,4 +123,8 @@ export class FomAddSubtopicComponent implements OnInit {
       icon: 'error',
     }).then();
   }
+  
+  cancel(): void {
+    this.router.navigate(['/course', this.courseId, 'topic', this.topicId]);
+  }
 }

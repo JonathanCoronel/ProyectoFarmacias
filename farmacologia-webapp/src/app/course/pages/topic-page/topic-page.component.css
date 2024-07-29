@@ -14,9 +14,7 @@ body {
   background: #FFFFFF;
   border-radius: 20px;
   margin: auto ;
-  display: grid;
-  grid-template-areas:
-    'menu info';
+  margin-bottom: 2%;
 }
 .containerTitle{
   color: white;
@@ -78,10 +76,10 @@ body {
   justify-content: center;
   align-items: center;
   padding: 30px;
+  border-radius: 10%;
 }
 .info h5{
-  margin-left: auto;
-  margin-right: 100px;
+  margin-left: 50%;
   color: #00345D;
   font-weight: 600;
 }

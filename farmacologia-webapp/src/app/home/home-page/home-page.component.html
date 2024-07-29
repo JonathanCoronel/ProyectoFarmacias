@@ -22,7 +22,7 @@
         <h2>{{ selectedCourse.title }}</h2>
         <p>{{ selectedCourse.description }}</p>
 
-      <button (click)="send(selectedCourse.id, selectedCourse.title)"> COMENZAR </button>
+      <button (click)="send(selectedCourse.id, selectedCourse.title)" style="width: 200px; height: 50px;"> COMENZAR </button>
     </div>
     <div class="general" *ngIf="!selectedCourse">
     <svg width="280" height="56" viewBox="0 0 311 56" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -56,16 +56,16 @@
 
   <div class="perfil">
 
-    <div class="usuario">
+    <div  *ngIf="user" class="usuario">
       <app-signed-user  [user]="user"></app-signed-user>
     </div>
-
+    
     <div class="textos">
-    <h3>+50</h3>
+    <h3>{{ numberOfUsers }}</h3>
     <p>Estudiantes inscritos</p>
-</div>
+    </div>
     <div class="textos">
-    <h3>+50</h3>
+    <h3>{{ numberOfSubtopics }}</h3>
     <p>Subtemas</p>
       </div>
 

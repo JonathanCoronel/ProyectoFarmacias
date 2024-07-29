@@ -46,7 +46,6 @@ export class FormComponent implements OnInit {
   courseName: string = '';
 
   // requirements
-
   selectableRequirements = true;
   removableRequirements = true;
   addOnBlurRequirements = true;
@@ -93,7 +92,7 @@ export class FormComponent implements OnInit {
     const input = event.input;
     const value = event.value;
 
-    // Add our learning
+    // Add learning
     if ((value || '').trim()) {
       this.learning.push(value.trim());
       this.createTopic.patchValue({
@@ -119,7 +118,7 @@ export class FormComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log('el form')
+    console.log('el form');
 
     this.activatedRoute.params.subscribe(async (params: Params) => {
         this.courseId = params.courseId;
@@ -215,6 +214,9 @@ export class FormComponent implements OnInit {
     }).then();
   }
 
+  cancel(): void {
+    this.router.navigate(['/course/', this.courseId, this.courseName]);
+  }
 
   captureFile(event): void {
     const files: FileList | null = event.target.files;

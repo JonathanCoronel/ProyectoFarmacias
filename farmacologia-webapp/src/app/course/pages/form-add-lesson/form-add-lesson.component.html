@@ -128,7 +128,6 @@
             </div>
             <p [innerHTML]="content.description"></p>
           </div>
-
         </ng-container>
 
       </div>
@@ -563,13 +562,13 @@
                     <div *ngIf="foro.pregunta">
                       <p>Incluya una respuesta escrita de uno o dos párrafos (100-200 palabras). Luego, revisa lo que otros estudiantes han escrito y comenta al menos dos de sus publicaciones.</p>
 
-                        <h1>Tu respuesta</h1>
+                        <h4>Tu respuesta</h4>
 
                         <div class="resBot">
                           <form>
                             <!-- Respuesta -->
                             <div class="mb-3 row">
-                              <label class="col-sm-2 col-form-label">Respuesta</label>
+                              <label class="col-sm-2 col-form-label" >Respuesta</label>
                               <div class="col-sm-10">
                                 <input type="text" [(ngModel)]="respuesta.comentario" name="comentario" placeholder="Ingrese la Respuesta">
                               </div>
@@ -580,7 +579,7 @@
                           </button>
                         </div>
                       
-                      <h1>Respuestas</h1>
+                      <h4>Respuestas</h4>
                       <div *ngFor="let respuesta of respuestas">
                         <b><p>{{respuesta.nombreUsuario}}</p></b>
                         <p>{{respuesta.comentario}}</p>
